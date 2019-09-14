@@ -24,19 +24,19 @@
     "pub": "pushd ./ && npm run build && cd dist && npm publish && popd"
   },
   "peerDependencies": {
-    "@storybook/addons": "^>= 5.2.0-rc.9",
-    "@storybook/api": "^>= 5.2.0-rc.9",
-    "@storybook/components": "^>= 5.2.0-rc.9",
-    "@storybook/react": "^>= 5.2.0-rc.9",
+    "@storybook/addons": "^>= 5.2.0",
+    "@storybook/api": "^>= 5.2.0",
+    "@storybook/components": "^>= 5.2.0",
+    "@storybook/react": "^>= 5.2.0",
     "react": ">= 16.8.3",
     "react-dom": ">= 16.8.3",
     "storybook-dep-webpack-plugin": ">= 0.9.1"
   },
   "devDependencies": {
-    "@storybook/addons": "^5.2.0-rc.9",
-    "@storybook/api": "^5.2.0-rc.9",
-    "@storybook/components": "^5.2.0-rc.9",
-    "@storybook/react": "^5.2.0-rc.9",
+    "@storybook/addons": "^5.2.0",
+    "@storybook/api": "^5.2.0",
+    "@storybook/components": "^5.2.0",
+    "@storybook/react": "^5.2.0",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
