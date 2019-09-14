@@ -1,0 +1,8 @@
+node_modules/**
+dist/**
+.eslintcache
+.vscode
+npm-debug.log
+package-lock.json
+.rpt2_cache
+.DS_Store

@@ -1,0 +1,1 @@
+declare module '@latticehr/react-org-chart'
