@@ -1,7 +1,7 @@
 # storybook-addon-deps
 
-A storybook addon to add a dependencies tree exporer tab. 
-works in conjunction with [storybook-dep-webpack-plugin](https://github.com/atanasster/storybook-dep-webpack-plugin/)
+A storybook addon to add a dependencies tree exporer tab.<br />
+Works in conjunction with [storybook-dep-webpack-plugin](https://github.com/atanasster/storybook-dep-webpack-plugin/)
 
 ![Dependencies plugin](./doc/storybook_dependencies.gif)
 
