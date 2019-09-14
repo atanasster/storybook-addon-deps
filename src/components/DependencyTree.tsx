@@ -1,31 +1,30 @@
 import React from 'react';
 import { DocsPageWrapper, DocsPage } from '@storybook/components';
 import { IDepencency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
-import memoize from 'memoizerific';
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
-
-const getDependencyModule = memoize(50)((componnetName, mapper) => {
-  const key = Object.keys(mapper).find(key => key.indexOf('___') === -1 && key.indexOf(componnetName) > -1);
-  return mapper[key];
-});
 
 interface DependencyTreeProps {
   map?: IDependenciesMap,
   story?: StoryInput,
 }
 
-export const DependencyTree = ({ map, story }: DependencyTreeProps) => {
+export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
+  const { mapper, maxLevels, compilationHash } = map;
   const [data, setData] = React.useState(undefined);
+  const [title, setTitle] = React.useState(undefined);
   const [searchString, setSearchString] = React.useState('');
   const [searchFocusIndex, setSearchFocusIndex] = React.useState(0);
   const [searchFoundCount, setSearchFoundCount] = React.useState(null);
+
+  const extractName = (dependency: string) => dependency.substring(0, dependency.indexOf(compilationHash));
+
   React.useEffect(() => {
     const dependencyToTree = (level: number, dep: string) => {
       if (dep) {
-        const main = (map[dep] as unknown) as IDepencency;
-        const name = dep.substring(0, dep.indexOf('___'));
+        const main = (mapper[dep] as unknown) as IDepencency;
+        const name = extractName(dep);
         return { 
           id: dep,
           subtitle: (
@@ -48,7 +47,7 @@ export const DependencyTree = ({ map, story }: DependencyTreeProps) => {
             </div>  
           ),
           title: main.id === main.name ? (main.id || main.request) : `${main.name} (${main.id})`,
-          children: level < 6 && Array.isArray(main.dependencies) ? main.dependencies.map(dependency => dependencyToTree(
+          children: level < maxLevels && Array.isArray(main.dependencies) ? main.dependencies.map(dependency => dependencyToTree(
               level + 1,
               dependency
             )) : undefined,
@@ -56,13 +55,26 @@ export const DependencyTree = ({ map, story }: DependencyTreeProps) => {
       }
       return undefined;  
     };
-    if (map && story && story.parameters.component) {
-      const module = getDependencyModule(story.parameters.component.name, map);
+    
+    if (mapper && story && story.parameters.component) {
+      const key = Object.keys(mapper).find(key => key.indexOf(compilationHash) === -1 && key.indexOf(story.parameters.component.name) > -1);
+      let module = mapper[key];
       if (module) {
-        setData(module.dependencies.map(dependency => dependencyToTree(0, dependency)));
-      }  
+        const componentModule = module.dependencies.find(key => key.indexOf(story.parameters.component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
+        if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDepencency).dependencies) { 
+          module = mapper[componentModule];
+          setTitle(extractName(componentModule));
+        } else {
+          setTitle(extractName(key));
+        }
+        const dependencies = module.dependencies.map(dependency => dependencyToTree(0, dependency));        
+        setData(dependencies);
+      }  else {
+        setData(undefined);
+        setTitle(undefined);
+      }
     }  
-  }, [map]);
+  }, [story, mapper]);
   // Case insensitive search of `node.title`
   const customSearchMethod = ({ node, searchQuery }) =>
     searchQuery &&
@@ -83,7 +95,7 @@ export const DependencyTree = ({ map, story }: DependencyTreeProps) => {
     );
   return (
     <DocsPageWrapper>
-      <DocsPage subtitle='Dependencies' title={story && story.parameters.component ? story.parameters.component.name : null}>
+      <DocsPage subtitle={title ? title : 'Dependencies'} title={story && story.parameters.component ? story.parameters.component.name : null}>
         {data ? (
           <>
             <form
