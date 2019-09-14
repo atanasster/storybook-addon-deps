@@ -1,63 +1,68 @@
 import React from 'react';
 import { DocsPageWrapper, DocsPage } from '@storybook/components';
-import { IDepencency } from 'storybook-dep-webpack-plugin/runtime/types';
+import { IDepencency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
+import memoize from 'memoizerific';
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
-
 import { StoryInput } from '../types';
 
-
+const getDependencyModule = memoize(50)((componnetName, mapper) => {
+  const key = Object.keys(mapper).find(key => key.indexOf('___') === -1 && key.indexOf(componnetName) > -1);
+  return mapper[key];
+});
 
 interface DependencyTreeProps {
-  module?: IDepencency,
+  map?: IDependenciesMap,
   story?: StoryInput,
 }
 
-export const DependencyTree = ({ module, story }: DependencyTreeProps) => {
+export const DependencyTree = ({ map, story }: DependencyTreeProps) => {
   const [data, setData] = React.useState(undefined);
   const [searchString, setSearchString] = React.useState('');
   const [searchFocusIndex, setSearchFocusIndex] = React.useState(0);
   const [searchFoundCount, setSearchFoundCount] = React.useState(null);
   React.useEffect(() => {
-    const dependencyToTree = (level: number, main: IDepencency, key: string) => main ? ({ 
-      id: key,
-      subtitle: (
-        <div>
-          <div
-            style={{
-              marginTop: '5px',
-            }}
-          >  
-            {main.id !== undefined ? main.request : undefined}
-          </div>
-          <div
-            style={{
-              margin: '5px 0',
-              opacity: 0.8,
-            }}
-          >
-            {key}
-          </div>  
-        </div>  
-      ),
-      title: main.id === main.name ? (main.id || main.request) : `${main.name} (${main.id})`,
-      children: typeof main.dependencies === 'object' ? Object.keys(main.dependencies).map((key) => {
-        const dependency = main.dependencies[key];
-        return dependencyToTree(
-          level + 1,
-          dependency,
-          key
-        );
-      }) : undefined,
-    }) : undefined;
-    if (module && module.dependencies) {
-      setData(Object.keys(module.dependencies)
-        .map(key => (
-          dependencyToTree(0, module.dependencies[key], key))
-        )
-      );
+    const dependencyToTree = (level: number, dep: string) => {
+      if (dep) {
+        const main = (map[dep] as unknown) as IDepencency;
+        const name = dep.substring(0, dep.indexOf('___'));
+        return { 
+          id: dep,
+          subtitle: (
+            <div>
+              <div
+                style={{
+                  marginTop: '5px',
+                }}
+              >  
+                {main.id !== undefined ? main.request : undefined}
+              </div>
+              <div
+                style={{
+                  margin: '5px 0',
+                  opacity: 0.8,
+                }}
+              >
+                {name}
+              </div>  
+            </div>  
+          ),
+          title: main.id === main.name ? (main.id || main.request) : `${main.name} (${main.id})`,
+          children: level < 6 && Array.isArray(main.dependencies) ? main.dependencies.map(dependency => dependencyToTree(
+              level + 1,
+              dependency
+            )) : undefined,
+        }
+      }
+      return undefined;  
+    };
+    if (map && story && story.parameters.component) {
+      const module = getDependencyModule(story.parameters.component.name, map);
+      if (module) {
+        setData(module.dependencies.map(dependency => dependencyToTree(0, dependency)));
+      }  
     }  
-  }, [module]);
+  }, [map]);
   // Case insensitive search of `node.title`
   const customSearchMethod = ({ node, searchQuery }) =>
     searchQuery &&
