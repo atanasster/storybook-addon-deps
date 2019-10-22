@@ -19,13 +19,18 @@ interface DependencyPanelProps {
   api: API, 
 }
 
-export const DependencyPanel = ({ active }: DependencyPanelProps) => (
-  <AddonPanel active={active}>
-    <Consumer filter={active ? mapper : () => {return {}}}>
-    {({ story, map }: ReturnType<typeof mapper>) => (
-        <DependencyTree map={map} story={story} />
-    )}
-    </Consumer>
-  </AddonPanel>
-);
+export const DependencyPanel = ({ active }: DependencyPanelProps) => {
+  if (!active) {
+    return null;
+  }
+  return (
+    <AddonPanel active={active}>
+      <Consumer filter={mapper}>
+      {({ story, map }: ReturnType<typeof mapper>) => (
+          <DependencyTree map={map} story={story} />
+      )}
+      </Consumer>
+    </AddonPanel>
+  );
+}  
 

@@ -35,7 +35,11 @@ import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
 addParameters({
  dependencies: {
+    // workaround to pass data to the storybook plugin panel bundle
     mapper: dependenciesMap,
+    
+    //display the dependencies of the story instead of componnet
+    //by default this is false
     storyDependencies: true,
   }
 });
