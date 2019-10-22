@@ -18,13 +18,12 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
   const [searchFocusIndex, setSearchFocusIndex] = React.useState(0);
   const [searchFoundCount, setSearchFoundCount] = React.useState(null);
 
-  const extractName = (dependency: string) => dependency.substring(0, dependency.indexOf(compilationHash));
 
   React.useEffect(() => {
     const dependencyToTree = (level: number, dep: string) => {
       if (dep) {
         const main = (mapper[dep] as unknown) as IDepencency;
-        const name = extractName(dep);
+        const name = main.contextPath;
         return { 
           id: dep,
           subtitle: (
@@ -59,14 +58,15 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
     if (mapper && story && story.parameters.component) {
       const key = Object.keys(mapper).find(key => key.indexOf(compilationHash) === -1 && key.indexOf(story.parameters.component.name) > -1);
       let module = mapper[key];
+      
       if (module) {
-        const componentModule = module.dependencies.find(key => key.indexOf(story.parameters.component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
+        const componentModule =  story.parameters.dependencies && story.parameters.dependencies.storyDependencies ?
+          null : module.dependencies.find(key => key.indexOf(story.parameters.component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
+        
         if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDepencency).dependencies) { 
           module = mapper[componentModule];
-          setTitle(extractName(componentModule));
-        } else {
-          setTitle(extractName(key));
         }
+        setTitle(module.contextPath);
         const dependencies = module.dependencies.map(dependency => dependencyToTree(0, dependency));        
         setData(dependencies);
       }  else {

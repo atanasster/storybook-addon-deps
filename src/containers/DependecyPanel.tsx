@@ -21,7 +21,7 @@ interface DependencyPanelProps {
 
 export const DependencyPanel = ({ active }: DependencyPanelProps) => (
   <AddonPanel active={active}>
-    <Consumer filter={mapper}>
+    <Consumer filter={active ? mapper : () => {return {}}}>
     {({ story, map }: ReturnType<typeof mapper>) => (
         <DependencyTree map={map} story={story} />
     )}

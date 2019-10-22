@@ -36,6 +36,7 @@ import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
 addParameters({
  dependencies: {
     mapper: dependenciesMap,
+    storyDependencies: true,
   }
 });
 ```

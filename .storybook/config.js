@@ -1,17 +1,9 @@
-import { configure, addDecorator } from '@storybook/react';
-import { withGrommet } from '../dist';
-import { grommet, dark } from 'grommet';
+import { configure, addParameters } from '@storybook/react';
+import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
-addDecorator(withGrommet({
-  theme: 'grommet',
-  themes: {
-    grommet,
-    dark,
-  },
-  boxProps: {
-    align: 'start',
-  },
-}
-));
-
-configure(require.context('./', true, /\.stories\.js$/), module);
+addParameters({
+  dependencies: {
+    mapper: dependenciesMap,
+  }
+});
+configure(require.context('./stories', true, /\.stories\.tsx$/), module);
