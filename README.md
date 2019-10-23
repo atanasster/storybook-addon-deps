@@ -38,7 +38,7 @@ addParameters({
     // workaround to pass data to the storybook plugin panel bundle
     mapper: dependenciesMap,
     
-    //display the dependencies of the story instead of componnet
+    //display the dependencies of the story instead of component
     //by default this is false
     storyDependencies: true,
   }
