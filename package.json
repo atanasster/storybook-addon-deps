@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -25,21 +25,27 @@
     "pub": "pushd ./ && npm run build && cd dist && npm publish && popd"
   },
   "peerDependencies": {
-    "@storybook/addons": "^>= 5.2.0",
-    "@storybook/api": "^>= 5.2.0",
-    "@storybook/components": "^>= 5.2.0",
-    "@storybook/react": "^>= 5.2.0",
+    "@storybook/addons": ">= 5.2.5",
+    "@storybook/addon-docs": ">= 5.2.5",
+    "@storybook/api": ">= 5.2.5",
+    "@storybook/components": ">= 5.2.5",
+    "@storybook/react": ">= 5.2.5",
+    "@storybook/router": ">= 5.2.5",
+    "@storybook/theming": "^>= 5.2.5",
     "react": ">= 16.8.3",
     "react-dom": ">= 16.8.3",
-    "storybook-dep-webpack-plugin": ">= 0.9.3"
+    "storybook-dep-webpack-plugin": ">= 0.9.5"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.2.4",
-    "@storybook/addons": "^5.2.4",
-    "@storybook/api": "^5.2.4",
-    "@storybook/components": "^5.2.4",
-    "@storybook/design-system": "^0.0.44",
-    "@storybook/react": "^5.2.4",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/addon-docs": "^5.2.5",
+    "@storybook/api": "^5.2.5",
+    "@storybook/components": "^5.2.5",
+    "@storybook/design-system": "^1.1.7",
+    "@storybook/react": "^5.2.5",
+    "@storybook/router": "^5.2.5",
+    "@storybook/theming": "^5.2.5",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
@@ -62,6 +68,6 @@
   "dependencies": {
     "memoizerific": "^1.11.3",
     "react-sortable-tree": "^2.6.2",
-    "storybook-dep-webpack-plugin": "^0.9.4"
+    "storybook-dep-webpack-plugin": "^0.9.5"
   }
 }

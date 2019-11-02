@@ -5,8 +5,8 @@ Works in conjunction with [storybook-dep-webpack-plugin](https://github.com/atan
 
 ![Dependencies plugin](./doc/storybook_dependencies.gif)
 
-## Live demo
-[grommet-controls](https://atanasster.github.io/grommet-controls/?path=/deps/controls-controls-avatar--main)
+## DocsPage demo 
+[grommet-controls](https://atanasster.github.io/grommet-controls/?path=/docs/controls-controls-avatar--main)
 
 ## Install and configure `storybook-dep-webpack-plugin`
 [storybook-dep-webpack-plugin](https://github.com/atanasster/storybook-dep-webpack-plugin/blob/master/README.md)
@@ -15,14 +15,6 @@ Works in conjunction with [storybook-dep-webpack-plugin](https://github.com/atan
 ## Installation
 ```sh
 npm i -D storybook-addon-deps
-```
-
-## Configuration
-
-in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
-
-```js
-import 'storybook-addon-deps/register';
 ```
 
 ## Usage
@@ -43,4 +35,47 @@ addParameters({
     storyDependencies: true,
   }
 });
+```
+
+## Add a dependencies tab to storybookjs (optional)
+
+in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
+
+```js
+import 'storybook-addon-deps/register';
+```
+
+## Add a documentation block to your DocsPage (optional)
+DocsPage is the zero-config default documentation that all stories get out of the box.
+You can add a **Dependencies** block to any level to your storybook
+
+**Globally (config.js)**
+
+```js
+import { DocsPage } from 'storybook-addon-deps/blocks/DocsPage';
+addParameters({ docs: { page: DocsPage } });
+```
+
+**Component-level (Button.stories.js)**
+
+```js
+import { Button } from './Button';
+import { DocsPage } from 'storybook-addon-deps/blocks/DocsPage';
+export default {
+  title: 'Demo/Button',
+  component: Button,
+  parameters: { docs: { page: DocsPage } },
+};
+```
+
+**Story-level (Button.stories.js)**
+
+```js
+import { Button } from './Button';
+import { DocsPage } from 'storybook-addon-deps/blocks/DocsPage';
+// export default { ... }
+export const basic => () => <Button>Basic</Button>
+basic.story = {
+  parameters: { docs: { page: DocsPage } }
+}
 ```
