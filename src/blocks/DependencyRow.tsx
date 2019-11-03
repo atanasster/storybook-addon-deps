@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { Link } from  '@reach/router';
+import { Link } from  '@storybook/components';
 import addons from '@storybook/addons';
 import { SELECT_STORY } from '@storybook/core-events';
 import { DocsContext } from '@storybook/addon-docs/blocks';
@@ -25,7 +25,7 @@ const Name = ({ story, children }: NameProps ) => {
   if (story) {
     console.log(story);
     return (
-      <Link to={`/?path=/docs/${story.id}`} onClick={() => addons.getChannel().emit(SELECT_STORY, story)}>
+      <Link href={`/?path=/docs/${story.id}`} onClick={() => addons.getChannel().emit(SELECT_STORY, story)}>
         {text}
       </Link>
     );  
