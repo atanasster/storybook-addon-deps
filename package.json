@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "0.9.8",
+  "version": "0.9.81",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -68,6 +68,6 @@
   "dependencies": {
     "memoizerific": "^1.11.3",
     "react-sortable-tree": "^2.6.2",
-    "storybook-dep-webpack-plugin": "^0.9.5"
+    "storybook-dep-webpack-plugin": "^0.9.6"
   }
 }

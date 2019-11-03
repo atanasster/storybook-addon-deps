@@ -13,9 +13,9 @@ type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: Compon
 
 
 export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, storyDependencies) => {
-  const { mapper, compilationHash } = map;
+  const { mapper } = map;
   if (mapper && component) {
-    const key = Object.keys(mapper).find(key => key.indexOf(compilationHash) === -1 && key.indexOf(component.name) > -1);
+    const key = Object.keys(mapper).find(key => mapper[key].id === component.name);
     let module = mapper[key];
     if (module) {
       const componentModule = storyDependencies ?

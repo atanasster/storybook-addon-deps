@@ -4,6 +4,7 @@ import { IDepencency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runt
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
+import { findComponentDependencies } from '../shared/jsonToMap';
 
 interface DependencyTreeProps {
   map?: IDependenciesMap,
@@ -11,7 +12,7 @@ interface DependencyTreeProps {
 }
 
 export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
-  const { mapper, maxLevels, compilationHash } = map;
+  const { mapper, maxLevels } = map;
   const [data, setData] = React.useState(undefined);
   const [title, setTitle] = React.useState(undefined);
   const [searchString, setSearchString] = React.useState('');
@@ -56,16 +57,8 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
     };
     
     if (mapper && story && story.parameters.component) {
-      const key = Object.keys(mapper).find(key => key.indexOf(compilationHash) === -1 && key.indexOf(story.parameters.component.name) > -1);
-      let module = mapper[key];
-      
+      const module = findComponentDependencies(map, story.parameters.component, story.parameters.dependencies && story.parameters.dependencies.storyDependencies);
       if (module) {
-        const componentModule =  story.parameters.dependencies && story.parameters.dependencies.storyDependencies ?
-          null : module.dependencies.find(key => key.indexOf(story.parameters.component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
-        
-        if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDepencency).dependencies) { 
-          module = mapper[componentModule];
-        }
         setTitle(module.contextPath);
         const dependencies = module.dependencies.map(dependency => dependencyToTree(0, dependency));        
         setData(dependencies);
