@@ -23,7 +23,6 @@ const Bold = styled.span({ fontWeight: 'bold' });
 const Name = ({ story, children }: NameProps ) => {
   const text = <Bold>{children}</Bold>;
   if (story) {
-    console.log(story);
     return (
       <Link href={`/?path=/docs/${story.id}`} onClick={() => addons.getChannel().emit(SELECT_STORY, story)}>
         {text}

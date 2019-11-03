@@ -17,7 +17,7 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
   if (mapper && component) {
     const key = Object.keys(mapper).find(key => mapper[key].id === component.name);
     let module = mapper[key];
-    if (module) {
+    if (module && module.dependencies) {
       const componentModule = storyDependencies ?
         null : module.dependencies.find(key => key.indexOf(component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
       
