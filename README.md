@@ -79,3 +79,39 @@ basic.story = {
   parameters: { docs: { page: DocsPage } }
 }
 ```
+
+## Add dependencies and dependents doc blocks to mdx stories (optional)
+**Button.stories.mdx**
+
+```jsx
+import {
+  Story,
+  Preview,
+  Props,
+  Description,
+  Meta,
+} from '@storybook/addon-docs/blocks';
+import { Button } from '@storybook/design-system/dist/components/Button';
+import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
+
+<Meta
+  title="Design System|Button"
+  component={Button}
+  parameters={{ component: Button }}
+/>
+
+# Selected story
+
+<Preview withToolbar={true}>
+  <Story id="." />
+</Preview>
+
+# Properties
+<Props of={Button} />
+
+# Dependencies doc block
+<Dependencies of={Button} />
+
+# Dependents doc block
+<Dependents of={Button} />
+```
