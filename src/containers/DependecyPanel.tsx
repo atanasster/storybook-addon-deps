@@ -4,7 +4,7 @@ import { AddonPanel } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import { StoryInput } from '../types';
 import { DependencyTree } from '../components/DependencyTree';
-import { getDependencyMap } from '../shared/jsonToMap';
+import { getDependencyMap } from '../shared/depUtils';
 
 const mapper = ({ state }: Combo): { story?: StoryInput, map?: IDependenciesMap } => {
   const story = state.storiesHash[state.storyId] as StoryInput;

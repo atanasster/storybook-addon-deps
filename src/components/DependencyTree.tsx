@@ -4,7 +4,7 @@ import { IDepencency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runt
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
-import { findComponentDependencies } from '../shared/jsonToMap';
+import { findComponentDependencies } from '../shared/depUtils';
 
 interface DependencyTreeProps {
   map?: IDependenciesMap,

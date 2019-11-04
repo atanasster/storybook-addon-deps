@@ -9,8 +9,8 @@ import { IDepencency } from 'storybook-dep-webpack-plugin/runtime/types';
 
 import { StoryInput } from '../types';
 
-interface PropRowProps {
-  dependency: IDepencency;
+interface ModuleRowProps {
+  module: IDepencency;
 }
 
 interface NameProps {
@@ -42,8 +42,8 @@ const StyledPropDef = styled.div<{}>(({ theme }) => ({
   fontSize: `${theme.typography.size.code}%`,
 }));
 
-export const DependencyRow: React.FunctionComponent<PropRowProps> = ({
-  dependency: { name, id, request, contextPath },
+export const ModuleRow: React.FunctionComponent<ModuleRowProps> = ({
+  module: { name, id, request, contextPath },
 }) => (
   <DocsContext.Consumer>
     {context => {

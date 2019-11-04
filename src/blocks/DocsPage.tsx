@@ -5,7 +5,8 @@ import { DocsPage as PureDocsPage, PropsTable } from '@storybook/components';
 import { H2, H3 } from '@storybook/components/html';
 import { DocsContext, Description, getDocgen, Story, Preview, getPropsTableProps,
   StringSlot, PropsSlot, StorySlot, StoriesSlot, DocsPageProps, DocsStoryProps } from '@storybook/addon-docs/blocks';
-import { DependenciesTable } from './DependenciesTable';
+import { getDependenciesProps } from '../shared/depUtils';
+import { ModulesTable } from './ModulesTable';
 
 const defaultTitleSlot: StringSlot = ({ selectedKind, parameters }) => {
   const {
@@ -72,26 +73,25 @@ export const DocsPage: React.FunctionComponent<DocsPageProps> = ({
       const description = descriptionSlot(context) || '';
       const propsTableProps = propsSlot(context);
 
-      const { selectedKind, storyStore, parameters } = context;
+      const { selectedKind, storyStore } = context;
       const componentStories = storyStore.getStoriesForKind(selectedKind);
       const primary = primarySlot(componentStories, context);
       const stories = storiesSlot(componentStories, context);
-
+      const dependencyModules = getDependenciesProps({}, context);
+      const dependentModules = getDependenciesProps({ dependents: true }, context);
       return (
         <PureDocsPage title={title} subtitle={subtitle}>
           <Description markdown={description} />
           {primary && <DocsStory key={primary.id} {...primary} expanded={false} withToolbar />}
           {propsTableProps && <PropsTable {...propsTableProps} />}
-          {parameters && parameters.dependencies && parameters.dependencies.mapper && (
-            <>
-              <H2>Dependencies</H2>
-              <DependenciesTable
-                jsonMap={parameters.dependencies.mapper}
-                storyDependencies={parameters.dependencies.storyDependencies}
-                component={parameters.component}
-              />
-            </>  
-          )}
+          <H2>Dependencies</H2>
+          <ModulesTable
+            {...dependencyModules}
+          />
+          <H2>Dependents</H2>
+          <ModulesTable
+            {...dependentModules}
+          />
           {stories && stories.length > 0 && <StoriesHeading>Stories</StoriesHeading>}
           {stories &&
             stories.map(story => story && <DocsStory key={story.id} {...story} expanded />)}
