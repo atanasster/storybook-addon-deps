@@ -1,51 +1,61 @@
-import React from 'react';
-import styled from 'styled-components';
+import {
+  Story,
+  Preview,
+  Props,
+  Description,
+  Meta,
+} from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
-
 import { Button } from '@storybook/design-system/dist/components/Button';
 import { Icon } from '@storybook/design-system';
+import { Dependencies, Dependents } from '../../dist/blocks';
 
-import { StoryLinkWrapper } from './StoryLinkWrapper';
+<Meta
+  title="Design System|Button"
+  component={Button}
+  parameters={{ component: Button }}
+/>
 
-const CustomButton = styled.button`
-  border: 1px solid green;
-  background: lightgreen;
-  color: rebeccapurple;
-  padding: 1em;
-  font-size: 1.2em;
-`;
+<Description of={Button} />
 
-function ButtonWrapper(props) {
-  return <CustomButton onClick={action('button action click')} {...props} />;
-}
+# Selected story
 
-export default {
-  title: 'Design System|Button',
-  component: Button,
-};
+<Preview withToolbar={true}>
+  <Story id="." />
+</Preview>
 
-export const buttons = () => (
-  <>
+# Properties
+<Props of={Button} />
+
+# Dependencies doc block
+<Dependencies of={Button} />
+
+# Dependents doc block
+<Dependents of={Button} />
+
+# Stories
+<Preview withToolbar={true}>
+  <Story name="buttons">
     <Button appearance="primary">Primary</Button>
     <Button appearance="secondary">Secondary</Button>
     <Button appearance="tertiary">Tertiary</Button>
     <Button appearance="outline">Outline</Button>
     <Button appearance="primaryOutline">Outline primary</Button>
     <Button appearance="secondaryOutline">Outline secondary</Button>
-  </>
-);
+  </Story>
+</Preview>
 
-export const sizes = () => (
-  <>
+<Preview withToolbar={true}>
+  <Story name="sizes">
     <Button appearance="primary">Default</Button>
     <Button appearance="primary" size="small">
       Small
     </Button>
-  </>
-);
+  </Story>
+</Preview>
 
-export const loading = () => (
-  <>
+<Preview withToolbar={true}>
+  <Story name="loading">
     <Button appearance="primary" isLoading>
       Primary
     </Button>
@@ -61,11 +71,11 @@ export const loading = () => (
     <Button appearance="outline" isLoading loadingText="Custom...">
       Outline
     </Button>
-  </>
-);
+  </Story>
+</Preview>
 
-export const disabled = () => (
-  <>
+<Preview withToolbar={true}>
+  <Story name="disabled">
     <Button appearance="primary" isDisabled>
       Primary
     </Button>
@@ -78,44 +88,16 @@ export const disabled = () => (
     <Button appearance="outline" isDisabled>
       Outline
     </Button>
-  </>
-);
+  </Story>
+</Preview>  
 
-export const containsIcon = () => (
-  <>
+<Preview withToolbar={true}>
+  <Story name="contains icon">
     <Button appearance="outline" containsIcon>
       <Icon icon="link" aria-label="Link" />
     </Button>
     <Button appearance="outline" size="small" containsIcon>
       <Icon icon="link" aria-label="Link" />
     </Button>
-  </>
-);
-
-export const buttonWrapper = () => (
-  <div>
-    <ButtonWrapper>Original Button Wrapper</ButtonWrapper>
-    <br />
-    <Button ButtonWrapper={ButtonWrapper} appearance="primary">
-      Button that passes clicks through
-    </Button>
-  </div>
-);
-
-buttonWrapper.story = {
-  name: 'button wrapper',
-};
-
-export const anchorWrapper = () => (
-  <div>
-    <StoryLinkWrapper to="http://storybook.js.org">Original Link Wrapper</StoryLinkWrapper>
-    <br />
-    <Button ButtonWrapper={StoryLinkWrapper} appearance="primary" href="http://storybook.js.org">
-      Button that passes href through
-    </Button>
-  </div>
-);
-
-anchorWrapper.story = {
-  name: 'anchor wrapper',
-};
+  </Story>
+</Preview>  

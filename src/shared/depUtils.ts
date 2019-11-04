@@ -1,5 +1,5 @@
 import memoize from 'memoizerific';
-import { IDependenciesMap, IDepencency } from 'storybook-dep-webpack-plugin/runtime/types';
+import { IDependenciesMap, IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
 import { PropsTableError } from '@storybook/components';
 import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon-docs/blocks';
 
@@ -12,7 +12,7 @@ export interface ComponentType {
   name?: string;
 }
 
-type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, storyDependencies?: boolean) => IDepencency;
+type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, storyDependencies?: boolean) => IDependency;
 
 
 export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, storyDependencies) => {
@@ -24,9 +24,9 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
       module.key = key;
       if (module && module.dependencies) {
         const componentModule = storyDependencies ?
-          null : module.dependencies.find(key => key.indexOf(component.name) > -1 && ((mapper[key] as unknown) as IDepencency).dependencies);
+          null : module.dependencies.find(key => key.indexOf(component.name) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
         
-        if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDepencency).dependencies) { 
+        if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDependency).dependencies) { 
           module = mapper[componentModule];
           module.key = componentModule;
         }
@@ -37,7 +37,7 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
   }
 });
 
-export type excudeFunctionType = (module: IDepencency) => boolean;
+export type excudeFunctionType = (module: IDependency) => boolean;
 export interface IDependenciesProps {
   excludeFn?: excudeFunctionType;
   of?: '.' | Component;
@@ -48,7 +48,7 @@ export type IDependenciesTableProps = IDependenciesProps & {
 }
 
 export interface IModulesTableProps {
-  modules?: IDepencency[];
+  modules?: IDependency[];
 }
 export const getDependenciesProps = (
   { excludeFn, of, dependents }: IDependenciesTableProps,
@@ -64,12 +64,12 @@ export const getDependenciesProps = (
     throw new Error('dependency.mapper parameter must be set');
   }
   const map = getDependencyMap(jsonMapper);
-  const module: IDepencency = findComponentDependencies(map, component, storyDependencies);
+  const module: IDependency = findComponentDependencies(map, component, storyDependencies);
   if (!module) {
     return undefined;
   }
   const { mapper } = map;
-  let modules: IDepencency[];
+  let modules: IDependency[];
   if (dependents ) {
     modules = Object.keys(mapper)
       .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.find(d => d === module['key']))

@@ -19,7 +19,7 @@ export const DepTable = styled(Table)<{}>(() => ({
 
 export const ModulesTable: React.FunctionComponent<IModulesTableProps> = props => {
   const { modules } = props;
-  if (!modules) {
+  if (!modules || modules.length === 0) {
     return <EmptyBlock>No dependencies found for this component</EmptyBlock>;
   }
   return (

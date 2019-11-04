@@ -3,12 +3,16 @@ import { Consumer, Combo, API } from '@storybook/api';
 import { AddonPanel } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import { StoryInput } from '../types';
-import { DependencyTree } from '../components/DependencyTree';
+import { DependencyTree } from './DependencyTree';
 import { getDependencyMap } from '../shared/depUtils';
 
-const mapper = ({ state }: Combo): { story?: StoryInput, map?: IDependenciesMap } => {
+const mapper = ({ state }: Combo): { story?: StoryInput, map?: IDependenciesMap, storyStore?: any } => {
   const story = state.storiesHash[state.storyId] as StoryInput;
-  return { story, map: getDependencyMap(story && story.parameters.dependencies && story.parameters.dependencies.mapper) };
+  return {
+    story,
+    map: getDependencyMap(story && story.parameters.dependencies && story.parameters.dependencies.mapper),
+    storyStore: state.storiesHash,
+  };
 };
 
 interface DependencyPanelProps {
@@ -23,8 +27,8 @@ export const DependencyPanel = ({ active }: DependencyPanelProps) => {
   return (
     <AddonPanel active={active}>
       <Consumer filter={mapper}>
-      {({ story, map }: ReturnType<typeof mapper>) => (
-          <DependencyTree map={map} story={story} />
+      {({ story, map, storyStore }: ReturnType<typeof mapper>) => (
+          <DependencyTree map={map} story={story} storyStore={storyStore} />
       )}
       </Consumer>
     </AddonPanel>

@@ -1,17 +1,28 @@
 import React from 'react';
+import { styled } from '@storybook/theming';
 import { DocsPageWrapper, DocsPage } from '@storybook/components';
-import { IDepencency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
+import { IDependency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
 import { findComponentDependencies } from '../shared/depUtils';
+import { ModuleName } from '../shared/ModuleName';
+import { StyledLight } from '../shared/Labels';
+
+export const LabelLight = styled(StyledLight)<{}>(() => ({
+  margin: '8px 0',
+}));
+export const LabelSmallLight = styled(StyledLight)<{}>(() => ({
+  marginTop: '8px',
+}));
 
 interface DependencyTreeProps {
   map?: IDependenciesMap,
   story?: StoryInput,
+  storyStore?: any,
 }
 
-export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
+export const DependencyTree = ({ map = {}, story, storyStore }: DependencyTreeProps) => {
   const { mapper, maxLevels } = map;
   const [data, setData] = React.useState(undefined);
   const [title, setTitle] = React.useState(undefined);
@@ -23,30 +34,32 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
   React.useEffect(() => {
     const dependencyToTree = (level: number, dep: string) => {
       if (dep) {
-        const main = (mapper[dep] as unknown) as IDepencency;
+        const main = (mapper[dep] as unknown) as IDependency;
         const name = main.contextPath;
+        const storyName = main.name && storyStore
+          && Object.keys(storyStore).find(storyname => {
+          const parameters = storyStore[storyname].parameters;
+          return parameters && parameters.component  && parameters.component.name === main.name;
+         });
+       const nodeStory = storyName ? storyStore[storyName] : undefined;
+ 
         return { 
           id: dep,
           subtitle: (
-            <div>
-              <div
-                style={{
-                  marginTop: '5px',
-                }}
-              >  
-                {main.id !== undefined ? main.request : undefined}
+            <>
+              <div>
+                <LabelSmallLight>  
+                  {main.id !== undefined ? main.request : undefined}
+                </LabelSmallLight>
               </div>
-              <div
-                style={{
-                  margin: '5px 0',
-                  opacity: 0.8,
-                }}
-              >
-                {name}
+              <div>
+                <LabelLight>
+                  {name}
+                </LabelLight>
               </div>  
-            </div>  
+            </>  
           ),
-          title: main.id === main.name ? (main.id || main.request) : `${main.name} (${main.id})`,
+          title: <ModuleName story={nodeStory} module={main} />,
           children: level < maxLevels && Array.isArray(main.dependencies) ? main.dependencies.map(dependency => dependencyToTree(
               level + 1,
               dependency
@@ -55,7 +68,6 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
       }
       return undefined;  
     };
-    
     if (mapper && story && story.parameters.component) {
       const module = findComponentDependencies(map, story.parameters.component, story.parameters.dependencies && story.parameters.dependencies.storyDependencies);
       if (module) {
@@ -145,7 +157,7 @@ export const DependencyTree = ({ map = {}, story }: DependencyTreeProps) => {
               //
               // This prop only expands the nodes that are seached.
               onlyExpandSearchedNodes
-              rowHeight={70}
+              rowHeight={90}
             />
           </> 
         ) : 'No dependencies to display'
