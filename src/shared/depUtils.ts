@@ -1,6 +1,5 @@
 import memoize from 'memoizerific';
 import { IDependenciesMap, IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
-import { PropsTableError } from '@storybook/components';
 import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon-docs/blocks';
 
 
@@ -56,14 +55,16 @@ export const getDependenciesProps = (
 ): IModulesTableProps => {
   const { component, dependencies: dependenciesParam } = parameters;
   const target = of === undefined || of === CURRENT_SELECTION ? component : of;
+  
   if (!target) {
-    throw new Error(PropsTableError.NO_COMPONENT);
+    return undefined;
   }
   const { mapper: jsonMapper, storyDependencies } = dependenciesParam;
   if (!jsonMapper) {
     throw new Error('dependency.mapper parameter must be set');
   }
   const map = getDependencyMap(jsonMapper);
+  
   const module: IDependency = findComponentDependencies(map, component, storyDependencies);
   if (!module) {
     return undefined;
