@@ -31,7 +31,7 @@
     "@storybook/addons": "5.2.0-rc.0",
     "@storybook/angular": "5.2.0-rc.0",
     "@storybook/source-loader": "5.2.0-rc.0",
-    "storybook-addon-deps": "^0.9.85",
+    "storybook-addon-deps": "^0.9.86",
     "storybook-dep-webpack-plugin": "^0.9.71",
     "@types/core-js": "^2.5.0",
     "@types/node": "~12.0.2",

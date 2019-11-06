@@ -1,6 +1,6 @@
 import { configure, addParameters, addDecorator } from '@storybook/angular';
 import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
-import { DocsPage } from '../../dist/blocks/DocsPage';
+import { DocsPage } from 'storybook-addon-deps/blocks';
 
 import addCssWarning from '../src/cssWarning';
 
