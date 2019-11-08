@@ -1,11 +1,7 @@
 import memoize from 'memoizerific';
 import { IDependenciesMap, IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
 import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon-docs/blocks';
-
-
-type DependencyStringifyFunction = (mapper: string) => IDependenciesMap;
-
-export const getDependencyMap: DependencyStringifyFunction = memoize(1)((mapper) => mapper ? JSON.parse(mapper) : undefined);
+import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
 export interface ComponentType {
   name?: string;
@@ -53,17 +49,14 @@ export const getDependenciesProps = (
   { excludeFn, of, dependents }: IDependenciesTableProps,
   { parameters = {} }: DocsContextProps
 ): IModulesTableProps => {
-  const { component, dependencies: dependenciesParam } = parameters;
+  const { component, dependencies: dependenciesParam = {}} = parameters;
   const target = of === undefined || of === CURRENT_SELECTION ? component : of;
   
   if (!target) {
     return undefined;
   }
-  const { mapper: jsonMapper, storyDependencies } = dependenciesParam;
-  if (!jsonMapper) {
-    throw new Error('dependency.mapper parameter must be set');
-  }
-  const map = getDependencyMap(jsonMapper);
+  const { storyDependencies } = dependenciesParam;
+  const map = getDependencyMap();
   
   const module: IDependency = findComponentDependencies(map, component, storyDependencies);
   if (!module) {

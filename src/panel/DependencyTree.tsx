@@ -17,12 +17,12 @@ export const LabelSmallLight = styled(StyledLight)<{}>(() => ({
 }));
 
 interface DependencyTreeProps {
-  map?: IDependenciesMap,
   story?: StoryInput,
   storyStore?: any,
+  map?: IDependenciesMap,
 }
 
-export const DependencyTree = ({ map = {}, story, storyStore }: DependencyTreeProps) => {
+export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) => {
   const { mapper, maxLevels } = map;
   const [data, setData] = React.useState(undefined);
   const [title, setTitle] = React.useState(undefined);

@@ -21,15 +21,11 @@ npm i -D storybook-addon-deps
 In your storybook config.js, define some global parameters to exchange the data collected by the `storybook-dep-webpack-plugin`
 
 
-```javascript
-import { configure, addDecorator, addParameters } from '@storybook/react';
-import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
+```js
+import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
 
 addParameters({
  dependencies: {
-    // workaround to pass data to the storybook plugin panel bundle
-    mapper: dependenciesMap,
-    
     //display the dependencies of the story instead of component
     //by default this is false
     storyDependencies: true,
@@ -37,7 +33,7 @@ addParameters({
 });
 ```
 
-## Add a dependencies tab to storybookjs (optional)
+## A. Add a dependencies tab to storybookjs (optional)
 
 in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
 
@@ -45,7 +41,16 @@ in the `addons.js` file in your storybook config, register `storybook-addon-deps
 import 'storybook-addon-deps/register';
 ```
 
-## Add a documentation block to your DocsPage (optional)
+in the `config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
+```js
+import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
+import { withDependenciesContext } from 'storybook-addon-deps';
+...
+addDecorator(withDependenciesContext);
+...
+```
+
+## B. Add a documentation block to your DocsPage (optional)
 DocsPage is the zero-config default documentation that all stories get out of the box.
 You can add a **Dependencies** block to any level to your storybook
 
@@ -80,7 +85,7 @@ basic.story = {
 }
 ```
 
-## Add dependencies and dependents doc blocks to mdx stories (optional)
+## C. Add dependencies and dependents doc blocks to mdx stories (optional)
 **Button.stories.mdx**
 
 ```jsx

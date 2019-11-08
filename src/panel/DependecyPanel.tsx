@@ -2,15 +2,16 @@ import React from 'react';
 import { Consumer, Combo, API } from '@storybook/api';
 import { AddonPanel } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
+import { EVENTS } from '../constants';
+import { useAddonState, useChannel } from '@storybook/api';
+import { ADDON_ID } from '../constants';  
 import { StoryInput } from '../types';
 import { DependencyTree } from './DependencyTree';
-import { getDependencyMap } from '../shared/depUtils';
 
 const mapper = ({ state }: Combo): { story?: StoryInput, map?: IDependenciesMap, storyStore?: any } => {
   const story = state.storiesHash[state.storyId] as StoryInput;
   return {
     story,
-    map: getDependencyMap(story && story.parameters.dependencies && story.parameters.dependencies.mapper),
     storyStore: state.storiesHash,
   };
 };
@@ -24,11 +25,20 @@ export const DependencyPanel = ({ active }: DependencyPanelProps) => {
   if (!active) {
     return null;
   }
+  const [map, setState] = useAddonState<IDependenciesMap>(ADDON_ID, {});
+  const emit = useChannel({
+    [EVENTS.RESULT]: (newMap: IDependenciesMap) => setState(newMap),
+  });
+  React.useEffect(() => {
+    emit(EVENTS.REQUEST);
+  }, []);
+  
+  console.log(map);
   return (
     <AddonPanel active={active}>
       <Consumer filter={mapper}>
-      {({ story, map, storyStore }: ReturnType<typeof mapper>) => (
-          <DependencyTree map={map} story={story} storyStore={storyStore} />
+      {({ story, storyStore }: ReturnType<typeof mapper>) => (
+          <DependencyTree story={story} storyStore={storyStore} map={map} />
       )}
       </Consumer>
     </AddonPanel>

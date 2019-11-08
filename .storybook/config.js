@@ -1,10 +1,11 @@
-import { configure, addParameters } from '@storybook/react';
-import { dependenciesMap } from 'storybook-dep-webpack-plugin/runtime/main';
+import { configure, addParameters, addDecorator } from '@storybook/react';
 import { DocsPage } from '../dist/blocks/DocsPage';
+import { withDependenciesContext } from '../dist/index';
+
 addParameters({
-  dependencies: {
-    mapper: dependenciesMap,
-  },
   docs: { page: DocsPage }
 });
+
+addDecorator(withDependenciesContext);
+
 configure(require.context('./stories', true, /\.stories\.(js|tsx?|mdx)$/), module);
