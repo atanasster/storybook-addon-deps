@@ -4,5 +4,7 @@ dist/**
 .vscode
 npm-debug.log
 package-lock.json
+documentation.json
+yarn.lock
 .rpt2_cache
 .DS_Store

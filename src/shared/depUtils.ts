@@ -1,7 +1,9 @@
-import memoize from 'memoizerific';
 import { IDependenciesMap, IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
 import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon-docs/blocks';
 import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
+
+const memoize = require('memoizerific');
+
 
 export interface ComponentType {
   name?: string;

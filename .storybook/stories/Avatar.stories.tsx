@@ -3,10 +3,7 @@ import { Avatar } from '@storybook/design-system/dist/components/Avatar';
 
 export default {
   title: 'Design System|Avatar',
-
-  parameters: {
-    component: Avatar,
-  },
+  component: Avatar,
 };
 
 export const large = () => (

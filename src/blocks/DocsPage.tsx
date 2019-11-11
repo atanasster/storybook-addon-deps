@@ -1,9 +1,8 @@
-import React from 'react';
-
+import React, { FunctionComponent } from 'react';
 import { parseKind } from '@storybook/router';
 import { DocsPage as PureDocsPage, PropsTable } from '@storybook/components';
 import { H2, H3 } from '@storybook/components/html';
-import { DocsContext, Description, getDocgen, Story, Preview, getPropsTableProps,
+import { DocsContext, Description, Story, Preview, getPropsTableProps, Anchor,
   StringSlot, PropsSlot, StorySlot, StoriesSlot, DocsPageProps, DocsStoryProps } from '@storybook/addon-docs/blocks';
 import { getDependenciesProps } from '../shared/depUtils';
 import { ModulesTable } from './ModulesTable';
@@ -25,8 +24,14 @@ const defaultSubtitleSlot: StringSlot = ({ parameters }) =>
 
 const defaultPropsSlot: PropsSlot = context => getPropsTableProps({ of: '.' }, context);
 
-const defaultDescriptionSlot: StringSlot = ({ parameters }) =>
-  parameters && getDocgen(parameters.component);
+const defaultDescriptionSlot: StringSlot = ({ parameters }) => {
+  const { component, docs } = parameters;
+  if (!component) {
+    return null;
+  }
+  const { extractComponentDescription } = docs || {};
+  return extractComponentDescription && extractComponentDescription(component, parameters);
+};
 
 const defaultPrimarySlot: StorySlot = stories => stories && stories[0];
 const defaultStoriesSlot: StoriesSlot = stories => {
@@ -41,21 +46,22 @@ const defaultStoriesSlot: StoriesSlot = stories => {
 const StoriesHeading = H2;
 const StoryHeading = H3;
 
-const DocsStory: React.FunctionComponent<DocsStoryProps> = ({
+const DocsStory: FunctionComponent<DocsStoryProps> = ({
   id,
   name,
-  description,
   expanded = true,
   withToolbar = false,
   parameters,
 }) => (
-  <>
+  <Anchor storyId={id}>
     {expanded && <StoryHeading>{(parameters && parameters.displayName) || name}</StoryHeading>}
-    {expanded && description && <Description markdown={description} />}
+    {expanded && parameters && parameters.docs && parameters.docs.storyDescription && (
+      <Description markdown={parameters.docs.storyDescription} />
+    )}
     <Preview withToolbar={withToolbar}>
       <Story id={id} />
     </Preview>
-  </>
+  </Anchor>
 );
 
 export const DocsPage: React.FunctionComponent<DocsPageProps> = ({
@@ -74,7 +80,9 @@ export const DocsPage: React.FunctionComponent<DocsPageProps> = ({
       const propsTableProps = propsSlot(context);
 
       const { selectedKind, storyStore } = context;
-      const componentStories = storyStore.getStoriesForKind(selectedKind);
+      const componentStories = storyStore
+      .getStoriesForKind(selectedKind)
+      .filter((s: any) => !(s.parameters && s.parameters.docs && s.parameters.docs.disable));
       const primary = primarySlot(componentStories, context);
       const stories = storiesSlot(componentStories, context);
       const dependencyModules = getDependenciesProps({}, context);

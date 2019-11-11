@@ -12,11 +12,14 @@ interface ModuleNameProps {
   module: IDependency;
 }
 
+export const nameAsString = (module: IDependency) => {
+  const { id, request, name } = module;
+  return id === name ? (id || request) : name;
+}
 const Bold = styled.span({ fontWeight: 'bold' });
 
 export const ModuleName = ({ story, module }: ModuleNameProps ) => {
-  const { id, request, name } = module;
-  const importID = <Bold>{id === name ? (id || request) : name}</Bold>;
+  const importID = <Bold>{nameAsString(module)}</Bold>;
   if (story) {
     return (
       <Link href={`/?path=/docs/${story.id}`} onClick={() => addons.getChannel().emit(SELECT_STORY, story)}>

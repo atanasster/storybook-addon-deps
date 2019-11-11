@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { DocsPageWrapper, DocsPage } from '@storybook/components';
+import { DocsPageWrapper, DocsPage, Description } from '@storybook/components';
 import { IDependency, IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
 import { findComponentDependencies } from '../shared/depUtils';
-import { ModuleName } from '../shared/ModuleName';
+import { dependencyError } from '../shared/getDependencyError';
+import { ModuleName, nameAsString } from '../shared/ModuleName';
 import { StyledLight } from '../shared/Labels';
 
 export const LabelLight = styled(StyledLight)<{}>(() => ({
@@ -23,14 +24,20 @@ interface DependencyTreeProps {
 }
 
 export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) => {
-  const { mapper, maxLevels } = map;
   const [data, setData] = React.useState(undefined);
   const [title, setTitle] = React.useState(undefined);
   const [searchString, setSearchString] = React.useState('');
   const [searchFocusIndex, setSearchFocusIndex] = React.useState(0);
   const [searchFoundCount, setSearchFoundCount] = React.useState(null);
-
-
+  let error = dependencyError({
+    map,
+    component: story && story.parameters.component,
+  });
+  if (!data && !error) {
+    error = "No dependencies to display yet, data still loading.";
+  }
+  console.log(error);
+  const { mapper, maxLevels } = map || {};
   React.useEffect(() => {
     const dependencyToTree = (level: number, dep: string) => {
       if (dep) {
@@ -59,6 +66,7 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
               </div>  
             </>  
           ),
+          str: nameAsString(main),
           title: <ModuleName story={nodeStory} module={main} />,
           children: level < maxLevels && Array.isArray(main.dependencies) ? main.dependencies.map(dependency => dependencyToTree(
               level + 1,
@@ -79,11 +87,10 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
         setTitle(undefined);
       }
     }  
-  }, [story, mapper]);
-  // Case insensitive search of `node.title`
+  }, [story, mapper]);  // Case insensitive search of `node.title`
   const customSearchMethod = ({ node, searchQuery }) =>
     searchQuery &&
-      node.title.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+      node.str.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
 
   const selectPrevMatch = () =>
     setSearchFocusIndex(
@@ -101,7 +108,7 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
   return (
     <DocsPageWrapper>
       <DocsPage subtitle={title ? title : 'Dependencies'} title={story && story.parameters.component ? story.parameters.component.name : null}>
-        {data ? (
+        {!error ? (
           <>
             <form
               style={{ display: 'inline-block', marginBottom: '20px' }}
@@ -158,10 +165,13 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
               // This prop only expands the nodes that are seached.
               onlyExpandSearchedNodes
               rowHeight={90}
+              innerStyle={{
+                height: 'auto'
+              }}
             />
           </> 
-        ) : 'No dependencies to display'
-        }
+        ) : <Description markdown={error} />
+      }
       </DocsPage>
     </DocsPageWrapper>  
   )

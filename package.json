@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "0.9.9",
+  "version": "0.9.91",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -25,34 +25,35 @@
     "pub": "pushd ./ && npm run build && cd dist && npm publish && popd"
   },
   "peerDependencies": {
-    "@storybook/addons": ">= 5.2.5",
-    "@storybook/addon-docs": ">= 5.2.5",
-    "@storybook/api": ">= 5.2.5",
-    "@storybook/client-api": ">= 5.2.5",
-    "@storybook/components": ">= 5.2.5",
-    "@storybook/react": ">= 5.2.5",
-    "@storybook/router": ">= 5.2.5",
-    "@storybook/theming": "^>= 5.2.5",
+    "@storybook/addons": ">= 5.3.0-alpha.43",
+    "@storybook/addon-docs": ">= 5.3.0-alpha.43",
+    "@storybook/api": ">= 5.3.0-alpha.43",
+    "@storybook/client-api": ">= 5.3.0-alpha.43",
+    "@storybook/components": ">= 5.3.0-alpha.43",
+    "@storybook/react": ">= 5.3.0-alpha.43",
+    "@storybook/router": ">= 5.3.0-alpha.43",
+    "@storybook/theming": "^>= 5.3.0-alpha.43",
     "react": ">= 16.8.3",
     "react-dom": ">= 16.8.3",
     "storybook-dep-webpack-plugin": ">= 0.9.5"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.2.5",
-    "@storybook/addons": "^5.2.5",
-    "@storybook/addon-docs": "^5.2.5",
-    "@storybook/api": "^5.2.5",
-    "@storybook/client-api": "^5.2.5",
-    "@storybook/components": "^5.2.5",
+    "@storybook/addon-actions": "5.3.0-alpha.43",
+    "@storybook/addons": "^5.3.0-alpha.43",
+    "@storybook/addon-docs": "^5.3.0-alpha.43",
+    "@storybook/api": "^5.3.0-alpha.43",
+    "@storybook/client-api": "^5.3.0-alpha.43",
+    "@storybook/components": "^5.3.0-alpha.43",
     "@storybook/design-system": "^1.1.7",
-    "@storybook/react": "^5.2.5",
-    "@storybook/router": "^5.2.5",
-    "@storybook/theming": "^5.2.5",
+    "@storybook/react": "^5.3.0-alpha.43",
+    "@storybook/router": "^5.3.0-alpha.43",
+    "@storybook/theming": "^5.3.0-alpha.43",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.6",
+    "babel-preset-react-app": "^9.0.2",
     "eslint": "^6.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -70,6 +71,6 @@
   "dependencies": {
     "memoizerific": "^1.11.3",
     "react-sortable-tree": "^2.6.2",
-    "storybook-dep-webpack-plugin": "^0.9.8"
+    "storybook-dep-webpack-plugin": "^0.9.92"
   }
 }

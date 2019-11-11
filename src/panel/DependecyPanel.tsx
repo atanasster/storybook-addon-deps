@@ -25,15 +25,15 @@ export const DependencyPanel = ({ active }: DependencyPanelProps) => {
   if (!active) {
     return null;
   }
-  const [map, setState] = useAddonState<IDependenciesMap>(ADDON_ID, {});
+  const [map, setState] = useAddonState<IDependenciesMap>(ADDON_ID, null);
   const emit = useChannel({
-    [EVENTS.RESULT]: (newMap: IDependenciesMap) => setState(newMap),
+    [EVENTS.RESULT]: (newMap: IDependenciesMap) => {
+      setState(newMap);
+    },  
   });
-  React.useEffect(() => {
+  if (map === null) {
     emit(EVENTS.REQUEST);
-  }, []);
-  
-  console.log(map);
+  };
   return (
     <AddonPanel active={active}>
       <Consumer filter={mapper}>
