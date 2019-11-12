@@ -5,9 +5,6 @@ import { withDependenciesContext } from '../dist/index';
 addDecorator(withDependenciesContext);
 
 addParameters({
-  dependencies: {
-    withStoriesOnly: true,
-  },
   docs: { page: DocsPage }
 });
 
