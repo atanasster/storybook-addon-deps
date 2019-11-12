@@ -4,7 +4,7 @@ import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
 const memoize = require('memoizerific');
 import { dependencyError } from './getDependencyError';
-import { IDependenciesParameters } from '../types';
+import { IDependenciesParameters, StoryInput } from '../types';
 
 export interface ComponentType {
   name?: string;
@@ -46,17 +46,40 @@ export type IDependenciesTableProps = IDependenciesProps & {
   dependents?: boolean; 
 }
 
+export type IModuleWithStory = IDependency & { story: StoryInput};
+
+export const mapModuleToStory = (modules: IDependency[], storyStore: any, parameters: IDependenciesParameters = {}): IModuleWithStory[] => {
+  if (modules) {
+    const result = modules.map(module => {
+      const store = storyStore._data || storyStore;
+      const storyName = module.name && store
+      && Object.keys(store).find(storyname => {
+        const parameters = store[storyname].parameters;
+        return parameters && parameters.component  && parameters.component.name === module.name;
+      });
+      const story = storyName ? store[storyName] : undefined;
+      return { ...module, story };
+    });
+    if (parameters.withStoriesOnly) {
+      return result.filter(m => m.story);
+    }
+    return result;
+  }
+  return undefined;
+}
 export interface IModulesTableProps {
-  modules?: IDependency[];
+  modules?: IModuleWithStory[];
+  module?: IDependency;
   error?: string,
 }
 export const getDependenciesProps = (
   { excludeFn, of, dependents }: IDependenciesTableProps,
-  { parameters = {} }: DocsContextProps
+  { parameters = {}, storyStore }: DocsContextProps,
+  defaultMap?: IDependenciesMap,
 ): IModulesTableProps => {
   const { component, dependencies: dependenciesParam = {}} = parameters;
   const target = of === undefined || of === CURRENT_SELECTION ? component : of;
-  const map = getDependencyMap();
+  const map = defaultMap || getDependencyMap();
   const error = dependencyError({
     map,
     component: target,
@@ -73,7 +96,7 @@ export const getDependenciesProps = (
     return { error: noDepError}
   }
   const { mapper } = map;
-  let modules: IDependency[];
+  let modules: IModuleWithStory[];
   if (dependents ) {
     modules = Object.keys(mapper)
       .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.find(d => d === module['key']))
@@ -83,11 +106,14 @@ export const getDependenciesProps = (
       modules = module.dependencies.map(key => mapper[key]);
     }
   }
+
+  modules = mapModuleToStory(modules, storyStore, dependenciesParam);
   if (modules && excludeFn) {
     modules = modules.filter(module => !excludeFn(module));
   }
   return { 
     modules,
+    module,
     error: modules.length > 0 ? undefined : noDepError,
    };
 };

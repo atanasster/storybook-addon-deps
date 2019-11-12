@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "0.9.91",
+  "version": "0.9.92",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
