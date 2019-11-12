@@ -3,7 +3,7 @@ import { styled } from '@storybook/theming';
 import { DocsPageWrapper, DocsPage, Description } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
-import 'react-sortable-tree/style.css';
+import '../tree-styles.css';
 import { StoryInput } from '../types';
 import { getDependenciesProps, IModuleWithStory, mapModuleToStory } from '../shared/depUtils';
 import { dependencyError, errors } from '../shared/getDependencyError';
@@ -147,6 +147,7 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
               </span>
             </form>  
             <SortableTree
+              isVirtualized={false}
               canDrag={false}
               treeData={data}
               searchQuery={searchString}

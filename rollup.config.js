@@ -33,6 +33,7 @@ export default {
     copy([
       { files: 'README.md', dest: 'dist' },
       { files: 'package.json', dest: 'dist' },
+      { files: './src/tree-styles.css', dest: 'dist' },
     ]),
     del({ targets: 'dist/*' }),
   ],

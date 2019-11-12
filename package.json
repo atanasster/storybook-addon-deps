@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "0.9.92",
+  "version": "0.9.93",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "5.3.0-alpha.43",
-    "@storybook/addons": "^5.3.0-alpha.43",
     "@storybook/addon-docs": "^5.3.0-alpha.43",
+    "@storybook/addons": "^5.3.0-alpha.43",
     "@storybook/api": "^5.3.0-alpha.43",
     "@storybook/client-api": "^5.3.0-alpha.43",
     "@storybook/components": "^5.3.0-alpha.43",
@@ -66,10 +66,12 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-typescript2": "^0.22.1",
+    "storybook-dark-mode": "^0.1.9",
     "typescript": "^3.5.3"
   },
   "dependencies": {
     "memoizerific": "^1.11.3",
+    "react-dnd": "8.0.3",
     "react-sortable-tree": "^2.6.2",
     "storybook-dep-webpack-plugin": "^0.9.92"
   }
