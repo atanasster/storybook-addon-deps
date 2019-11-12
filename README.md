@@ -29,6 +29,10 @@ addParameters({
     //display the dependencies of the story instead of component
     //by default this is false
     storyDependencies: true,
+
+    //display only dependencies/dependents that have a story in storybook
+    //by default this is false
+    withStoriesOnly: true,
   }
 });
 ```

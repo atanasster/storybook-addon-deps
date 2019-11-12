@@ -3,16 +3,18 @@ import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon
 import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
 const memoize = require('memoizerific');
-
+import { dependencyError } from './getDependencyError';
+import { IDependenciesParameters } from '../types';
 
 export interface ComponentType {
   name?: string;
 }
 
-type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, storyDependencies?: boolean) => IDependency;
+type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, parameters?: IDependenciesParameters) => IDependency;
 
 
-export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, storyDependencies) => {
+export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, parameters) => {
+  const { storyDependencies } = parameters || {};
   const { mapper } = map;
   if (mapper && component) {
     const key = Object.keys(mapper).find(key => mapper[key].id === component.name);
@@ -46,6 +48,7 @@ export type IDependenciesTableProps = IDependenciesProps & {
 
 export interface IModulesTableProps {
   modules?: IDependency[];
+  error?: string,
 }
 export const getDependenciesProps = (
   { excludeFn, of, dependents }: IDependenciesTableProps,
@@ -53,16 +56,21 @@ export const getDependenciesProps = (
 ): IModulesTableProps => {
   const { component, dependencies: dependenciesParam = {}} = parameters;
   const target = of === undefined || of === CURRENT_SELECTION ? component : of;
-  
-  if (!target) {
-    return undefined;
-  }
-  const { storyDependencies } = dependenciesParam;
   const map = getDependencyMap();
+  const error = dependencyError({
+    map,
+    component: target,
+  })
+  if (error) {
+    return {
+      error,
+    }
+  }
   
-  const module: IDependency = findComponentDependencies(map, component, storyDependencies);
+  const noDepError = `No ${dependents ? 'dependents' : 'dependencies'} found for this component`;
+  const module: IDependency = findComponentDependencies(map, component, dependenciesParam);
   if (!module) {
-    return undefined;
+    return { error: noDepError}
   }
   const { mapper } = map;
   let modules: IDependency[];
@@ -78,5 +86,8 @@ export const getDependenciesProps = (
   if (modules && excludeFn) {
     modules = modules.filter(module => !excludeFn(module));
   }
-  return { modules };
+  return { 
+    modules,
+    error: modules.length > 0 ? undefined : noDepError,
+   };
 };

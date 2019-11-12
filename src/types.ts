@@ -14,3 +14,8 @@ export interface StoryInput {
   };
   isLeaf: boolean;
 }
+
+export interface IDependenciesParameters {
+  storyDependencie?: boolean,
+  withStoriesOnly? : boolean,
+}

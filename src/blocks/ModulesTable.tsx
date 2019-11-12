@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { Table } from '@storybook/components';
+import { Table, Description } from '@storybook/components';
 import { EmptyBlock } from '@storybook/components/dist/blocks/EmptyBlock';
 import { ResetWrapper } from '@storybook/components/dist/typography/DocumentFormatting';
 import { ModuleRow } from './ModuleRow';
@@ -18,7 +18,14 @@ export const DepTable = styled(Table)<{}>(() => ({
 }));
 
 export const ModulesTable: React.FunctionComponent<IModulesTableProps> = props => {
-  const { modules } = props;
+  const { modules, error } = props;
+  if (error) {
+    return (
+      <EmptyBlock>
+        <Description markdown={error} />
+      </EmptyBlock>
+    );
+  }
   if (!modules || modules.length === 0) {
     return <EmptyBlock>No dependencies found for this component</EmptyBlock>;
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from  '@storybook/components';
 import { styled } from '@storybook/theming';
+import { useStorybookApi } from '@storybook/api';
 import addons from '@storybook/addons';
 import { SELECT_STORY } from '@storybook/core-events';
 import { IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
@@ -20,9 +21,11 @@ const Bold = styled.span({ fontWeight: 'bold' });
 
 export const ModuleName = ({ story, module }: ModuleNameProps ) => {
   const importID = <Bold>{nameAsString(module)}</Bold>;
+  const api = useStorybookApi();
   if (story) {
     return (
-      <Link href={`/?path=/docs/${story.id}`} onClick={() => addons.getChannel().emit(SELECT_STORY, story)}>
+      //within a docspage, useStorybookApi returns undefined -> no ManagerProvider
+      <Link href={`/?path=/docs/${story.id}`} onClick={() => api ? api.selectStory(story.id) : addons.getChannel().emit(SELECT_STORY, story)}>
         {importID}
       </Link>
     );  

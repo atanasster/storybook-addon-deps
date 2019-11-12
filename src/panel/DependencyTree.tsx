@@ -6,7 +6,7 @@ import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 import { StoryInput } from '../types';
 import { findComponentDependencies } from '../shared/depUtils';
-import { dependencyError } from '../shared/getDependencyError';
+import { dependencyError, errors } from '../shared/getDependencyError';
 import { ModuleName, nameAsString } from '../shared/ModuleName';
 import { StyledLight } from '../shared/Labels';
 
@@ -34,9 +34,8 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
     component: story && story.parameters.component,
   });
   if (!data && !error) {
-    error = "No dependencies to display yet, data still loading.";
+    error = errors.NO_DEPENDENCIES;
   }
-  console.log(error);
   const { mapper, maxLevels } = map || {};
   React.useEffect(() => {
     const dependencyToTree = (level: number, dep: string) => {
@@ -77,7 +76,7 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
       return undefined;  
     };
     if (mapper && story && story.parameters.component) {
-      const module = findComponentDependencies(map, story.parameters.component, story.parameters.dependencies && story.parameters.dependencies.storyDependencies);
+      const module = findComponentDependencies(map, story.parameters.component, story.parameters.dependencies);
       if (module) {
         setTitle(module.contextPath);
         const dependencies = module.dependencies.map(dependency => dependencyToTree(0, dependency));        
