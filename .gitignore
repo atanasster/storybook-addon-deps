@@ -1,4 +1,6 @@
 node_modules/**
+examples/web-components/node_modules
+examples/angular/node_modules
 dist/**
 .eslintcache
 .vscode

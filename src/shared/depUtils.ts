@@ -12,18 +12,31 @@ export interface ComponentType {
 
 type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, parameters?: IDependenciesParameters) => IDependency;
 
+const titleCase = (str: string): string => str.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+
+export const getComponentName = (component?: ComponentType | string): string | undefined => {
+  if (!component) {
+    return undefined;
+  } 
+  if (typeof component === 'string') {
+    return titleCase(component)
+  }
+  return component.name;
+}  
 
 export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, parameters) => {
   const { storyDependencies } = parameters || {};
   const { mapper } = map;
   if (mapper && component) {
-    const key = Object.keys(mapper).find(key => mapper[key].id === component.name);
+    const componentName = getComponentName(component);
+    console.log('componentName', Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
+    const key = Object.keys(mapper).find(key => mapper[key].id === componentName);
     if (key) {
       let module = mapper[key];
       module.key = key;
       if (module && module.dependencies) {
         const componentModule = storyDependencies ?
-          null : module.dependencies.find(key => key.indexOf(component.name) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
+          null : module.dependencies.find(key => key.indexOf(componentName) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
         
         if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDependency).dependencies) { 
           module = mapper[componentModule];
@@ -50,12 +63,14 @@ export type IModuleWithStory = IDependency & { story: StoryInput};
 
 export const mapModuleToStory = (modules: IDependency[], storyStore: any, parameters: IDependenciesParameters = {}): IModuleWithStory[] => {
   if (modules) {
+    
     const result = modules.map(module => {
       const store = storyStore._data || storyStore;
       const storyName = module.name && store
       && Object.keys(store).find(storyname => {
         const parameters = store[storyname].parameters;
-        return parameters && parameters.component  && parameters.component.name === module.name;
+        const componentName = getComponentName(parameters && parameters.component);
+        return componentName && componentName === module.name;
       });
       const story = storyName ? store[storyName] : undefined;
       return { ...module, story };

@@ -5,7 +5,7 @@ import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import '../tree-styles.css';
 import { StoryInput } from '../types';
-import { getDependenciesProps, IModuleWithStory, mapModuleToStory } from '../shared/depUtils';
+import { getDependenciesProps, IModuleWithStory, mapModuleToStory, getComponentName } from '../shared/depUtils';
 import { dependencyError, errors } from '../shared/getDependencyError';
 import { ModuleName, nameAsString } from '../shared/ModuleName';
 import { StyledLight } from '../shared/Labels';
@@ -104,7 +104,7 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
     );
   return (
     <DocsPageWrapper>
-      <DocsPage subtitle={title ? title : 'Dependencies'} title={story && story.parameters.component ? story.parameters.component.name : null}>
+      <DocsPage subtitle={title ? title : 'Dependencies'} title={getComponentName(story && story.parameters.component)}>
         {!error ? (
           <>
             <form
