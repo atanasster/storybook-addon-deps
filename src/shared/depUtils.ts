@@ -21,8 +21,16 @@ export const getComponentName = (component?: ComponentType | string): string | u
   if (!component) {
     return undefined;
   } 
+
   if (typeof component === 'string') {
-    return titleCase(component);
+    const wc = customElements.get(component);
+    if (wc && wc.name) {
+      return wc.name; 
+    }
+    if (component.includes('-')) {
+      return titleCase(component);
+    }
+    return component;
   }
   //
   if (component.__docgenInfo && component.__docgenInfo.displayName) {
