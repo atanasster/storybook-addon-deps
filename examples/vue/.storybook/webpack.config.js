@@ -11,8 +11,6 @@ module.exports = ({ config, mode }) => {
 
   // the following is the only configuration required for collecting dependencies data
   config.plugins.push(new DependenciesPlugin({
-    //by default @storybook modules are also excluded
-    exclude: /^@babel/
   }));
   return config;
 };
