@@ -24,7 +24,7 @@
     "format-json": "^1.0.3",
     "global": "^4.3.2",
     "lit-element": "^2.2.1",
-    "storybook-addon-deps": "^0.9.94",
+    "storybook-addon-deps": "^0.9.95",
     "storybook-dep-webpack-plugin": "^0.9.91"
   }
 }

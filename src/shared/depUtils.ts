@@ -37,7 +37,7 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
   const { mapper } = map;
   if (mapper && component) {
     const componentName = getComponentName(component);
-    console.log('componentName', component, Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
+    // console.log('componentName', component, Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
     if (componentName) {
       
       const key = Object.keys(mapper).find(key => mapper[key].id === componentName || mapper[key].name === componentName);
