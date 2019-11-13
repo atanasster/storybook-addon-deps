@@ -8,6 +8,9 @@ import { IDependenciesParameters, StoryInput } from '../types';
 
 export interface ComponentType {
   name?: string;
+  __docgenInfo?: {
+    displayName?: string,    
+  }
 }
 
 type ComponentDependenciesFunction = (map?: IDependenciesMap, component?: ComponentType, parameters?: IDependenciesParameters) => IDependency;
@@ -19,8 +22,13 @@ export const getComponentName = (component?: ComponentType | string): string | u
     return undefined;
   } 
   if (typeof component === 'string') {
-    return titleCase(component)
+    return titleCase(component);
   }
+  //
+  if (component.__docgenInfo && component.__docgenInfo.displayName) {
+    return component.__docgenInfo.displayName;
+  }
+
   return component.name;
 }  
 
@@ -29,21 +37,24 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
   const { mapper } = map;
   if (mapper && component) {
     const componentName = getComponentName(component);
-    console.log('componentName', Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
-    const key = Object.keys(mapper).find(key => mapper[key].id === componentName);
-    if (key) {
-      let module = mapper[key];
-      module.key = key;
-      if (module && module.dependencies) {
-        const componentModule = storyDependencies ?
-          null : module.dependencies.find(key => key.indexOf(componentName) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
-        
-        if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDependency).dependencies) { 
-          module = mapper[componentModule];
-          module.key = componentModule;
+    console.log('componentName', component, Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
+    if (componentName) {
+      
+      const key = Object.keys(mapper).find(key => mapper[key].id === componentName || mapper[key].name === componentName);
+      if (key) {
+        let module = mapper[key];
+        module.key = key;
+        if (module && module.dependencies) {
+          const componentModule = storyDependencies ?
+            null : module.dependencies.find(key => key.indexOf(componentName) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
+          
+          if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDependency).dependencies) { 
+            module = mapper[componentModule];
+            module.key = componentModule;
+          }
+          return module;
         }
-        return module;
-      }
+      }  
     }  
     return undefined;
   }
