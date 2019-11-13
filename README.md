@@ -131,3 +131,6 @@ import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
 
 ## angular
 ![angular](./doc/angular.gif)
+
+## vue
+![vue](./doc/vue.gif)
