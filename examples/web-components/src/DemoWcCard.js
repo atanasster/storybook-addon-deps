@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { CustomEvent } from 'global';
 import { LitElement, html } from 'lit-element';
-import { demoWcCardStyle } from './demoWcCardStyle.css.js.js';
+import { demoWcCardStyle } from './demoWcCardStyle.css.js';
 
 /**
  * This is a container looking like a card with a back and front side you can switch
