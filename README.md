@@ -124,3 +124,10 @@ import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
 # Dependents doc block
 <Dependents of={Button} />
 ```
+
+# Other frameworks
+## web-components
+![web components](./doc/web-components.gif)
+
+## angular
+![angular](./doc/angular.gif)
