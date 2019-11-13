@@ -1,6 +1,6 @@
 
-## angular
-![angular](../../doc/vue.gif)
+## vue
+![vue](../../doc/vue.gif)
 
 
 ## Installation
