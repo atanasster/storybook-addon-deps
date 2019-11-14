@@ -26,10 +26,6 @@ import { configure, addDecorator, addParameters } from '@storybook/{yourframewor
 
 addParameters({
  dependencies: {
-    //display the dependencies of the story instead of component
-    //by default this is false
-    storyDependencies: true,
-
     //display only dependencies/dependents that have a story in storybook
     //by default this is false
     withStoriesOnly: true,
@@ -37,24 +33,7 @@ addParameters({
 });
 ```
 
-## A. Add a dependencies tab to storybookjs (optional)
-
-in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
-
-```js
-import 'storybook-addon-deps/register';
-```
-
-in the `config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
-```js
-import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
-import { withDependenciesContext } from 'storybook-addon-deps';
-...
-addDecorator(withDependenciesContext);
-...
-```
-
-## B. Add a documentation block to your DocsPage (optional)
+## A. Add a documentation block to your DocsPage (optional)
 DocsPage is the zero-config default documentation that all stories get out of the box.
 You can add a **Dependencies** block to any level to your storybook
 
@@ -89,7 +68,7 @@ basic.story = {
 }
 ```
 
-## C. Add dependencies and dependents doc blocks to mdx stories (optional)
+## B. Add dependencies and dependents doc blocks to mdx stories (optional)
 **Button.stories.mdx**
 
 ```jsx
@@ -123,6 +102,23 @@ import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
 
 # Dependents doc block
 <Dependents of={Button} />
+```
+
+## C. Add a dependencies tab to storybookjs (optional)
+
+in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
+
+```js
+import 'storybook-addon-deps/register';
+```
+
+in the `config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
+```js
+import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
+import { withDependenciesContext } from 'storybook-addon-deps';
+...
+addDecorator(withDependenciesContext);
+...
 ```
 
 # Other frameworks

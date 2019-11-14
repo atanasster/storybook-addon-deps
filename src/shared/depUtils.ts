@@ -41,7 +41,6 @@ export const getComponentName = (component?: ComponentType | string): string | u
 }  
 
 export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, parameters) => {
-  const { storyDependencies } = parameters || {};
   const { mapper } = map;
   if (mapper && component) {
     const componentName = getComponentName(component);
@@ -53,8 +52,7 @@ export const findComponentDependencies: ComponentDependenciesFunction = memoize(
         let module = mapper[key];
         module.key = key;
         if (module && module.dependencies) {
-          const componentModule = storyDependencies ?
-            null : module.dependencies.find(key => key.indexOf(componentName) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
+          const componentModule = module.dependencies.find(key => key.indexOf(componentName) > -1 && ((mapper[key] as unknown) as IDependency).dependencies);
           
           if (componentModule && mapper[componentModule] && ((mapper[componentModule] as unknown) as IDependency).dependencies) { 
             module = mapper[componentModule];
