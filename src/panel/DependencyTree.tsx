@@ -5,7 +5,7 @@ import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import '../tree-styles.css';
 import { StoryInput } from '../types';
-import { getDependenciesProps, IModuleWithStory, mapModuleToStory, getComponentName } from '../shared/depUtils';
+import { getDependenciesProps, IModuleWithStory, mapModuleToStory, getComponentName } from '../shared/utils';
 import { dependencyError, errors } from '../shared/getDependencyError';
 import { ModuleName, nameAsString } from '../shared/ModuleName';
 import { StyledLight } from '../shared/Labels';

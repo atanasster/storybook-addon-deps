@@ -2,7 +2,7 @@ import React from 'react';
 import { DocsContext } from '@storybook/addon-docs/blocks';
 import { IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
 import { ModuleName } from '../shared/ModuleName';
-import { getComponentName } from '../shared/depUtils';
+import { getComponentName } from '../shared/utils';
 import { StyledLight, StyledSmallLight } from '../shared/Labels';
 
 interface ModuleRowProps {

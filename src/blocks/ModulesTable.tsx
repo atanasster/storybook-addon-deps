@@ -4,7 +4,7 @@ import { Table, Description } from '@storybook/components';
 import { EmptyBlock } from '@storybook/components/dist/blocks/EmptyBlock';
 import { ResetWrapper } from '@storybook/components/dist/typography/DocumentFormatting';
 import { ModuleRow } from './ModuleRow';
-import { IModulesTableProps } from '../shared/depUtils';
+import { IModulesTableProps } from '../shared/utils';
 
 
 

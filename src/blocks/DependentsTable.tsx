@@ -1,6 +1,6 @@
 import React from 'react';
 import { DocsContext } from '@storybook/addon-docs/blocks';
-import { getDependenciesProps, IDependenciesProps } from '../shared/depUtils';
+import { getDependenciesProps, IDependenciesProps } from '../shared/utils';
 import { ModulesTable } from './ModulesTable';
 
 

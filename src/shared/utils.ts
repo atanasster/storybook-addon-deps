@@ -1,4 +1,5 @@
 import { IDependenciesMap, IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
+import { StoryStore } from '@storybook/client-api';
 import { DocsContextProps, Component, CURRENT_SELECTION } from '@storybook/addon-docs/blocks';
 import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
 
@@ -40,7 +41,7 @@ export const getComponentName = (component?: ComponentType | string): string | u
   return component.name;
 }  
 
-export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, parameters) => {
+export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component) => {
   const { mapper } = map;
   if (mapper && component) {
     const componentName = getComponentName(component);
@@ -76,9 +77,9 @@ export type IDependenciesTableProps = IDependenciesProps & {
   dependents?: boolean; 
 }
 
-export type IModuleWithStory = IDependency & { story: StoryInput};
+export type IModuleWithStory = IDependency & { story?: StoryInput};
 
-export const mapModuleToStory = (modules: IDependency[], storyStore: any, parameters: IDependenciesParameters = {}): IModuleWithStory[] => {
+export const mapModuleToStory = (modules: IDependency[], storyStore: StoryStore, parameters: IDependenciesParameters = {}): IModuleWithStory[] => {
   if (modules) {
     
     const result = modules.map(module => {
@@ -99,11 +100,25 @@ export const mapModuleToStory = (modules: IDependency[], storyStore: any, parame
   }
   return undefined;
 }
+
+export const getComponentStories = (component: string, storyStore: StoryStore) => {
+  const store = storyStore._data || storyStore;
+  return store && Object.keys(store).filter(storyname => {
+      const parameters = store[storyname].parameters;
+      const componentName = getComponentName(parameters && parameters.component);
+      return componentName && componentName === component;
+    });
+}    
+
+
 export interface IModulesTableProps {
   modules?: IModuleWithStory[];
   module?: IDependency;
   error?: string,
 }
+
+
+
 export const getDependenciesProps = (
   { excludeFn, of, dependents }: IDependenciesTableProps,
   { parameters = {}, storyStore }: DocsContextProps,
@@ -123,7 +138,7 @@ export const getDependenciesProps = (
   }
   
   const noDepError = `No ${dependents ? 'dependents' : 'dependencies'} found for this component`;
-  const module: IDependency = findComponentDependencies(map, component, dependenciesParam);
+  const module: IDependency = findComponentDependencies(map, component);
   if (!module) {
     return { error: noDepError}
   }
@@ -131,7 +146,7 @@ export const getDependenciesProps = (
   let modules: IModuleWithStory[];
   if (dependents ) {
     modules = Object.keys(mapper)
-      .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.find(d => d === module['key']))
+      .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.includes(module['key']))
       .map(key => mapper[key]);
   } else {
     if (module.dependencies) {

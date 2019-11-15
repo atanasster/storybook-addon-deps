@@ -4,7 +4,7 @@ import { DocsPage as PureDocsPage, PropsTable } from '@storybook/components';
 import { H2, H3 } from '@storybook/components/html';
 import { DocsContext, Description, Story, Preview, getPropsTableProps, Anchor,
   StringSlot, PropsSlot, StorySlot, StoriesSlot, DocsPageProps, DocsStoryProps } from '@storybook/addon-docs/blocks';
-import { getDependenciesProps } from '../shared/depUtils';
+import { getDependenciesProps } from '../shared/utils';
 import { ModulesTable } from './ModulesTable';
 
 const defaultTitleSlot: StringSlot = ({ selectedKind, parameters }) => {
