@@ -11,9 +11,14 @@ import { SectionTitle, ChartComponentUsage, ChartStoriesPerComponent } from '../
 Displays how many stories are written per component (the more the merrier)
 <ChartStoriesPerComponent
   height='500px'
-  chartType="BarChart"
   options={{
-    legend: 'none',
+    sliceVisibilityThreshold: 0.04, 
+    pieSliceText: 'value',
+    // is3D: true,
+    // pieHole: 0.7,
+    slices: {
+      0: { offset: 0.1 },
+    }  
   }}
 />
 
