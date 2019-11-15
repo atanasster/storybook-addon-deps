@@ -121,6 +121,49 @@ addDecorator(withDependenciesContext);
 ...
 ```
 
+# Project analysis
+The charts used are [Google Charts](https://react-google-charts.com) and all their properties are applicable. Detailed information on configuration options is available from Google documentation, for example [Pie Chart](https://developers.google.com/chart/interactive/docs/gallery/piechart#configuration-options) options.
+
+```
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ChartComponentUsage, ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
+  
+<Meta title="About|Dashboard" />
+<ChartStoriesPerComponent />
+<ChartComponentUsage />
+```
+
+## Stories per component
+```
+import { SectionTitle, ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
+<SectionTitle>Stories per component</SectionTitle>
+<ChartStoriesPerComponent
+  height='500px'
+  options={{
+    sliceVisibilityThreshold: 0.04,
+    pieSliceText: 'value',
+    s3D: true,
+    pieHole: 0.7,
+  }}
+/>
+```
+
+## Components by usage
+
+Displays how many times each component is used by other components.
+```
+import { SectionTitle, ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
+<SectionTitle>Components usage</SectionTitle>
+<ChartComponentUsage
+  height='500px'
+  options={{
+    minColor: '#009688',
+    midColor: '#f7f7f7',
+    maxColor: '#ee8100',
+  }}
+/>
+```
+
 # Other frameworks
 ## web-components
 ![web components](./doc/web-components.gif)
