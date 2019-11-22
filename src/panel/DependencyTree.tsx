@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { DocsPageWrapper, DocsPage, Description } from '@storybook/components';
+import { DocsPageWrapper, Title, Subtitle, Description } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import '../tree-styles.css';
@@ -104,73 +104,73 @@ export const DependencyTree = ({ story, storyStore, map }: DependencyTreeProps) 
     );
   return (
     <DocsPageWrapper>
-      <DocsPage subtitle={title ? title : 'Dependencies'} title={getComponentName(story && story.parameters.component)}>
-        {!error ? (
-          <>
-            <form
-              style={{ display: 'inline-block', marginBottom: '20px' }}
-              onSubmit={event => {
-                event.preventDefault();
-              }}
-            >
-              <input
-                style={{ fontSize: '1rem' }}
-                value={searchString}
-                onChange={event =>
-                  setSearchString(event.target.value)
-                }
-                type="search"
-                id="search"
-                placeholder="type to search"
-              />
-              <button
-                type="button"
-                disabled={!searchFoundCount}
-                onClick={selectPrevMatch}
-              >
-                &lt;
-              </button>
-
-              <button
-                type="submit"
-                disabled={!searchFoundCount}
-                onClick={selectNextMatch}
-              >
-                &gt;
-              </button>
-
-              <span>
-                &nbsp;
-                {searchFoundCount > 0 ? searchFocusIndex + 1 : 0}
-                &nbsp;/&nbsp;
-                {searchFoundCount || 0}
-              </span>
-            </form>  
-            <SortableTree
-              isVirtualized={false}
-              canDrag={false}
-              treeData={data}
-              searchQuery={searchString}
-              searchMethod={customSearchMethod}
-              searchFocusOffset={searchFocusIndex}
-              onChange={treeData => setData(treeData)}
-              searchFinishCallback={(matches) => {
-                setSearchFoundCount(matches.length);
-                setSearchFocusIndex(matches.length > 0 ? searchFocusIndex % matches.length : 0);
-                }
+      {title && <Title>Dependencies</Title>}
+      <Subtitle>{getComponentName(story && story.parameters.component)}</Subtitle>
+      {!error ? (
+        <>
+          <form
+            style={{ display: 'inline-block', marginBottom: '20px' }}
+            onSubmit={event => {
+              event.preventDefault();
+            }}
+          >
+            <input
+              style={{ fontSize: '1rem' }}
+              value={searchString}
+              onChange={event =>
+                setSearchString(event.target.value)
               }
-              //
-              // This prop only expands the nodes that are seached.
-              onlyExpandSearchedNodes
-              rowHeight={90}
-              innerStyle={{
-                height: 'auto'
-              }}
+              type="search"
+              id="search"
+              placeholder="type to search"
             />
-          </> 
-        ) : <Description markdown={error} />
+            <button
+              type="button"
+              disabled={!searchFoundCount}
+              onClick={selectPrevMatch}
+            >
+              &lt;
+            </button>
+
+            <button
+              type="submit"
+              disabled={!searchFoundCount}
+              onClick={selectNextMatch}
+            >
+              &gt;
+            </button>
+
+            <span>
+              &nbsp;
+              {searchFoundCount > 0 ? searchFocusIndex + 1 : 0}
+              &nbsp;/&nbsp;
+              {searchFoundCount || 0}
+            </span>
+          </form>  
+          <SortableTree
+            isVirtualized={false}
+            canDrag={false}
+            treeData={data}
+            searchQuery={searchString}
+            searchMethod={customSearchMethod}
+            searchFocusOffset={searchFocusIndex}
+            onChange={treeData => setData(treeData)}
+            searchFinishCallback={(matches) => {
+              setSearchFoundCount(matches.length);
+              setSearchFocusIndex(matches.length > 0 ? searchFocusIndex % matches.length : 0);
+              }
+            }
+            //
+            // This prop only expands the nodes that are seached.
+            onlyExpandSearchedNodes
+            rowHeight={90}
+            innerStyle={{
+              height: 'auto'
+            }}
+          />
+        </> 
+      ) : <Description markdown={error} />
       }
-      </DocsPage>
     </DocsPageWrapper>  
   )
 }
