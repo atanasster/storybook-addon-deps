@@ -25,7 +25,7 @@ export const users = [
 ];
 
 export default {
-  title: 'Design System|AvatarList',
+  title: 'Design System/AvatarList',
   component: AvatarList,
   excludeStories: ['users'],
 };
@@ -44,5 +44,5 @@ smallSize.story = {
   name: 'small size',
 };
 
-export const loading = () => <AvatarList loading />;
+export const loading = () => <AvatarList />;
 export const empty = () => <AvatarList users={[]} />;

@@ -3,7 +3,7 @@ import React from 'react';
 import { ProgressDots } from '@storybook/design-system/dist/components/ProgressDots';
 
 export default {
-  title: 'Design System|ProgressDots',
+  title: 'Design System/ProgressDots',
   component: ProgressDots,
 };
 

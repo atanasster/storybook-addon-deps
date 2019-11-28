@@ -5,7 +5,7 @@ import { Checkbox } from '@storybook/design-system/dist/components/Checkbox';
 const onChange = action('change');
 
 export default {
-  title: 'Design System|forms/Checkbox',
+  title: 'Design System/forms/Checkbox',
   component: Checkbox,
 };
 

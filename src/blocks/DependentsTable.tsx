@@ -5,11 +5,11 @@ import { ModulesTable } from './ModulesTable';
 
 
 
-const DependentsTable: React.FunctionComponent<IDependenciesProps> = props => (
+const DependentsTable: React.FunctionComponent<IDependenciesProps> = ({ children, ...props }) => (
   <DocsContext.Consumer>
     {context => {
       const tableProps = getDependenciesProps({...props, dependents: true }, context);
-      return <ModulesTable {...tableProps} />;
+      return <ModulesTable {...tableProps} children={children} />;
     }}
   </DocsContext.Consumer>
 );

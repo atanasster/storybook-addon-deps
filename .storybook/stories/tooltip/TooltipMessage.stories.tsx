@@ -4,7 +4,7 @@ import WithTooltip from '@storybook/design-system/dist/components/tooltip/WithTo
 import { TooltipMessage } from '@storybook/design-system/dist/components/tooltip/TooltipMessage';
 
 export default {
-  title: 'Design System|tooltip/TooltipMessage',
+  title: 'Design System/tooltip/TooltipMessage',
 
   decorators: [
     storyFn => (

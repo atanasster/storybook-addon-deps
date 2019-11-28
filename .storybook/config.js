@@ -7,6 +7,3 @@ addDecorator(withDependenciesContext);
 addParameters({
   docs: { page: DocsPage }
 });
-
-
-configure(require.context('./stories', true, /\.stories\.(js|tsx?|mdx)$/), module);

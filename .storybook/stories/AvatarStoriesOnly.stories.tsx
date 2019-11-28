@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar } from '@storybook/design-system/dist/components/Avatar';
 
 export default {
-  title: 'Options|Stories only',
+  title: 'Options/Stories only',
   component: Avatar,
   parameters: {
     dependencies: {
@@ -13,7 +13,7 @@ export default {
 
 export const large = () => (
   <div>
-    <Avatar loading size="large" />
+    <Avatar size="large" />
     <Avatar size="large" username="Tom Coleman" />
     <Avatar
       size="large"
@@ -25,7 +25,7 @@ export const large = () => (
 
 export const medium = () => (
   <div>
-    <Avatar loading />
+    <Avatar />
     <Avatar username="Tom Coleman" />
     <Avatar username="Tom Coleman" src="https://avatars2.githubusercontent.com/u/132554" />
   </div>
@@ -33,7 +33,7 @@ export const medium = () => (
 
 export const small = () => (
   <div>
-    <Avatar loading size="small" />
+    <Avatar size="small" />
     <Avatar size="small" username="Dominic Nguyen" />
     <Avatar
       size="small"
@@ -45,7 +45,7 @@ export const small = () => (
 
 export const tiny = () => (
   <div>
-    <Avatar loading size="tiny" />
+    <Avatar size="tiny" />
     <Avatar size="tiny" username="Dominic Nguyen" />
     <Avatar
       size="tiny"

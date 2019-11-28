@@ -6,7 +6,7 @@ import { Textarea } from '@storybook/design-system/dist/components/Textarea';
 const onChange = action('change');
 
 export default {
-  title: 'Design System|forms/Textarea',
+  title: 'Design System/forms/Textarea',
   component: Textarea,
 };
 

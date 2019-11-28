@@ -18,10 +18,12 @@ export const DocsPage: FunctionComponent<DocsPageProps> = ({
       <Description slot={descriptionSlot} />
       <Primary slot={primarySlot} />
       <Props slot={propsSlot} />
-      <Heading>Dependencies</Heading>
-      <Dependencies />
-      <Heading>Dependents</Heading>
-      <Dependents />
+      <Dependencies>
+        <Heading>Dependencies</Heading>
+      </Dependencies>  
+      <Dependents>
+        <Heading>Dependents</Heading>
+      </Dependents>  
       <Stories slot={storiesSlot} />
     </>
   );

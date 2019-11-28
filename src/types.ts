@@ -16,6 +16,6 @@ export interface StoryInput {
 }
 
 export interface IDependenciesParameters {
-  storyDependencie?: boolean,
-  withStoriesOnly? : boolean,
+  hideEmpty?: boolean;
+  withStoriesOnly? : boolean;
 }

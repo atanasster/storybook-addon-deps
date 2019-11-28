@@ -115,6 +115,7 @@ export interface IModulesTableProps {
   modules?: IModuleWithStory[];
   module?: IDependency;
   error?: string,
+  hideEmpty?: boolean,
 }
 
 
@@ -161,6 +162,7 @@ export const getDependenciesProps = (
   return { 
     modules,
     module,
+    hideEmpty: dependenciesParam.hideEmpty,
     error: modules.length > 0 ? undefined : noDepError,
    };
 };

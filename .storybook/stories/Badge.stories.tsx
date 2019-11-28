@@ -3,7 +3,7 @@ import { Badge } from '@storybook/design-system/dist/components/Badge';
 import { Icon } from '@storybook/design-system/dist/components/Icon';
 
 export default {
-  title: 'Design System|Badge',
+  title: 'Design System/Badge',
   component: Badge,
 };
 
