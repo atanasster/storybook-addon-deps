@@ -26,5 +26,3 @@ addParameters({
 
 
 addDecorator(withDependenciesContext);
-
-configure(require.context('../src/stories', true, /\.stories\.(ts|mdx)$/), module);
