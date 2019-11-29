@@ -1,13 +1,14 @@
 import {
   Story,
+  Heading,
 } from '@storybook/addon-docs/blocks';
-import { SectionTitle, ChartComponentUsage, ChartStoriesPerComponent } from '../../dist/blocks';
+import { ChartComponentUsage, ChartStoriesPerComponent } from '../../dist/blocks';
 
 <Meta
   title="About/Dashboard"
 />
 
-<SectionTitle>Stories per component</SectionTitle>
+<Heading>Stories per component</Heading>
 Displays how many stories are written per component (the more the merrier)
 <ChartStoriesPerComponent
   height='500px'
@@ -22,7 +23,7 @@ Displays how many stories are written per component (the more the merrier)
   }}
 />
 
-<SectionTitle>Components usage</SectionTitle>
+<Heading>Components usage</Heading>
 How many times a component is used, click to see by which components
 <br /><br />
 <ChartComponentUsage

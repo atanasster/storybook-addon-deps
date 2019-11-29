@@ -139,8 +139,9 @@ import { ChartComponentUsage, ChartStoriesPerComponent } from 'storybook-addon-d
 
 ## Stories per component
 ```
-import { SectionTitle, ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
-<SectionTitle>Stories per component</SectionTitle>
+import { Heading } from '@storybook/addon-docs/blocks';
+import { ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
+<Heading>Stories per component</Heading>
 <ChartStoriesPerComponent
   height='500px'
   options={{
@@ -156,8 +157,9 @@ import { SectionTitle, ChartStoriesPerComponent } from 'storybook-addon-deps/blo
 
 Displays how many times each component is used by other components.
 ```
-import { SectionTitle, ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
-<SectionTitle>Components usage</SectionTitle>
+import { Heading } from '@storybook/addon-docs/blocks';
+import { ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
+<Heading>Components usage</Heading>
 <ChartComponentUsage
   height='500px'
   options={{
