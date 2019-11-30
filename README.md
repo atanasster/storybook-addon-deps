@@ -18,7 +18,7 @@ npm i -D storybook-addon-deps
 ```
 
 ## Usage
-In your storybook config.js, define some global parameters to exchange the data collected by the `storybook-dep-webpack-plugin`
+In your storybook preview.js(or config.js), define some global parameters to exchange the data collected by the `storybook-dep-webpack-plugin`
 
 
 ```js
@@ -41,7 +41,7 @@ addParameters({
 DocsPage is the zero-config default documentation that all stories get out of the box.
 You can add a **Dependencies** block to any level to your storybook
 
-**Globally (config.js)**
+**Globally (preview.js/config.js)**
 
 ```js
 import { DocsPage } from 'storybook-addon-deps/blocks/DocsPage';
@@ -110,13 +110,27 @@ import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
 
 ## C. Add a dependencies tab to storybookjs (optional)
 
-in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
+## 1. Register addon
+* Register `storybook-addon-deps` in your `main.js` config:
+
+```js
+...
+  addons: [
+    ...
+    'storybook-addon-deps/register',
+    ...
+  ],
+
+```
+
+* Or in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
 
 ```js
 import 'storybook-addon-deps/register';
 ```
 
-in the `config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
+## 2. Add decorator
+in the `preview.js`/`config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
 ```js
 import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
 import { withDependenciesContext } from 'storybook-addon-deps';
