@@ -43,7 +43,7 @@
     "babel-plugin-require-context-hook": "^1.0.0",
     "global": "^4.3.2",
     "storybook-addon-deps": "^1.0.0",
-    "storybook-dep-webpack-plugin": "^0.9.93",
+    "storybook-dep-webpack-plugin": "^1.0.1",
     "ts-node": "~8.4.1",
     "typescript": "^3.4.0"
   }

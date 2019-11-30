@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "1.0.01",
+  "version": "1.0.02",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -35,7 +35,7 @@
     "@storybook/theming": "^>= 5.3.0-beta.11",
     "react": ">= 16.8.3",
     "react-dom": ">= 16.8.3",
-    "storybook-dep-webpack-plugin": ">= 0.9.5"
+    "storybook-dep-webpack-plugin": ">= 1.0.1"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.0-beta.11",
@@ -74,6 +74,6 @@
     "react-dnd": "8.0.3",
     "react-google-charts": "^3.0.15",
     "react-sortable-tree": "^2.6.2",
-    "storybook-dep-webpack-plugin": "^0.9.93"
+    "storybook-dep-webpack-plugin": "^1.0.1"
   }
 }

@@ -25,6 +25,6 @@
     "global": "^4.3.2",
     "lit-element": "^2.2.1",
     "storybook-addon-deps": "^0.9.97",
-    "storybook-dep-webpack-plugin": "^0.9.93"
+    "storybook-dep-webpack-plugin": "^1.0.1"
   }
 }
