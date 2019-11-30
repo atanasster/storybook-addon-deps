@@ -27,6 +27,11 @@ module.exports = {
     resolve: {
       ...config.resolve,
       extensions: [...(config.resolve.extensions || []), '.ts', '.tsx'],
+      alias: {...config.resolve.alias, ...{
+        "styled-components": path.resolve(path.resolve(__dirname, '..'), "node_modules", "styled-components"),
+        "@storybook/addon-docs": path.resolve(path.resolve(__dirname, '..'), "node_modules", "@storybook", "addon-docs"),
+        "@storybook/theming": path.resolve(path.resolve(__dirname, '..'), "node_modules", "@storybook", "theming"),
+      }}
     },
     plugins: [
       ...config.plugins,
