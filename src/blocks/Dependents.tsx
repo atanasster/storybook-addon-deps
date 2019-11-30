@@ -1,17 +1,18 @@
 import React from 'react';
 import { DocsContext } from '@storybook/addon-docs/blocks';
 import { getDependenciesProps, IDependenciesProps } from '../shared/utils';
+import { TableWrapper } from './TableWrapper';
 import { ModulesTable } from './ModulesTable';
 
-
-
-const DependentsTable: React.FunctionComponent<IDependenciesProps> = ({ children, ...props }) => (
+export const Dependents: React.FunctionComponent<IDependenciesProps> = ({ children, title, ...props }) => (
   <DocsContext.Consumer>
     {context => {
       const tableProps = getDependenciesProps({...props, dependents: true }, context);
-      return <ModulesTable {...tableProps} children={children} />;
+      return (
+        <TableWrapper>
+          <ModulesTable title={title} {...tableProps} children={children} />
+        </TableWrapper>  
+      );  
     }}
   </DocsContext.Consumer>
 );
-
-export { DependentsTable as Dependents };

@@ -8,7 +8,7 @@ import {
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/design-system/dist/components/Button';
 import { Icon } from '@storybook/design-system';
-import { Dependencies, Dependents } from '../../dist/blocks';
+import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
 
 <Meta
   title="Design System/Button"
@@ -27,6 +27,9 @@ import { Dependencies, Dependents } from '../../dist/blocks';
 
 # Properties
 <Props of={Button} />
+
+# DependenciesTable doc block
+<DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' of={Button} />
 
 # Dependencies doc block
 <Dependencies of={Button} />

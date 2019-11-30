@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { Title, Subtitle, Primary, Stories, Props, Description, Heading, DocsPageProps } from '@storybook/addon-docs/blocks';
-import { Dependencies } from './DependenciesTable';
-import { Dependents } from './DependentsTable';
+import { Title, Subtitle, Primary, Stories, Props, Description, DocsPageProps } from '@storybook/addon-docs/blocks';
+import { DependenciesTable } from './DependenciesTable';
 
 export const DocsPage: FunctionComponent<DocsPageProps> = ({
   titleSlot,
@@ -18,12 +17,7 @@ export const DocsPage: FunctionComponent<DocsPageProps> = ({
       <Description slot={descriptionSlot} />
       <Primary slot={primarySlot} />
       <Props slot={propsSlot} />
-      <Dependencies>
-        <Heading>Dependencies</Heading>
-      </Dependencies>  
-      <Dependents>
-        <Heading>Dependents</Heading>
-      </Dependents>  
+      <DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' />
       <Stories slot={storiesSlot} />
     </>
   );

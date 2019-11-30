@@ -1,63 +1,46 @@
 import React from 'react';
+import { Description } from '@storybook/components';
+import { SectionRow }  from '@storybook/components/dist/blocks/PropsTable/SectionRow';
 import { styled } from '@storybook/theming';
-import { Table, Description } from '@storybook/components';
-import { EmptyBlock } from '@storybook/components/dist/blocks/EmptyBlock';
-import { ResetWrapper } from '@storybook/components/dist/typography/DocumentFormatting';
+import { transparentize } from 'polished';
+import { withReset } from '@storybook/components/dist/typography/shared';
+
 import { ModuleRow } from './ModuleRow';
 import { IModulesTableProps } from '../shared/utils';
 
-
-
-export const DepTable = styled(Table)<{}>(() => ({
-  '&&': {
-    'th:last-of-type, td:last-of-type': {
-      width: '70%',
-    },
-
-  },
+const ErrorRow = styled.tr<{}>(withReset, ({ theme }) => ({
+  backgroundColor: theme.base === 'light' ? 'rgba(0,0,0,.01)' : 'rgba(255,255,255,.01)',
+  border: 'none !important',
+  fontSize: `${theme.typography.size.s2}px`,
+  padding: '20px',
+  color:
+    theme.base === 'light'
+      ? transparentize(0.4, theme.color.defaultText)
+      : transparentize(0.6, theme.color.defaultText),
 }));
 
 export const ModulesTable: React.FunctionComponent<IModulesTableProps> = props => {
-  const { modules, error, hideEmpty } = props;
-  const WithChildren = ({ children }) => (
-    <>
-      {props.children}
-      {children}
-    </>  
-  )
+  const { modules, error, hideEmpty, title, dependents } = props;
+  let err;
   if (error) {
     if (hideEmpty) {
       return null;
     }
-    return (
-      <WithChildren>
-        <EmptyBlock>
-          <Description markdown={error} />
-        </EmptyBlock>
-      </WithChildren>  
+    err = (
+        <Description markdown={error} />
     );
   }
   if (!modules || modules.length === 0) {
     if (hideEmpty) {
       return null;
     }
-    return <WithChildren><EmptyBlock>No dependencies found for this component</EmptyBlock></WithChildren>;
+    err = <>{`No ${!dependents ? 'dependencies' : 'dependents'} found for this component`}</>;
   }
   return (
-    <WithChildren>
-      <ResetWrapper>
-        <DepTable className="docblock-dependenciestable">
-          <thead>
-            <tr>
-              <th>name</th>
-              <th>path</th>
-            </tr>
-          </thead>
-          <tbody>
-            {modules.map(module => <ModuleRow key={module.request} module={module} />)}
-          </tbody>
-        </DepTable>
-      </ResetWrapper>
-    </WithChildren>  
+    <>
+      {title && <SectionRow section={title} />}
+      {err && <ErrorRow><td colSpan={2}>{err}</td></ErrorRow>}
+      {!err && modules.map(module => <ModuleRow key={module.request} module={module} />)}
+    </>  
   );
 };

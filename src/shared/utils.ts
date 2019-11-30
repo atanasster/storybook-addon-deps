@@ -71,6 +71,7 @@ export type excudeFunctionType = (module: IDependency) => boolean;
 export interface IDependenciesProps {
   excludeFn?: excudeFunctionType;
   of?: '.' | Component;
+  title?: string;
 }
 
 export type IDependenciesTableProps = IDependenciesProps & {
@@ -114,8 +115,10 @@ export const getComponentStories = (component: string, storyStore: StoryStore) =
 export interface IModulesTableProps {
   modules?: IModuleWithStory[];
   module?: IDependency;
-  error?: string,
-  hideEmpty?: boolean,
+  error?: string;
+  hideEmpty?: boolean;
+  title?: string;
+  dependents?: boolean;
 }
 
 
@@ -162,6 +165,7 @@ export const getDependenciesProps = (
   return { 
     modules,
     module,
+    dependents,
     hideEmpty: dependenciesParam.hideEmpty,
     error: modules.length > 0 ? undefined : noDepError,
    };

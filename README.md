@@ -84,27 +84,22 @@ import {
   Meta,
 } from '@storybook/addon-docs/blocks';
 import { Button } from '@storybook/design-system/dist/components/Button';
-import { Dependencies, Dependents } from 'storybook-addon-deps/blocks';
+import { DependenciesTable, Dependencies, Dependents } from 'storybook-addon-deps/blocks';
 
 <Meta
   title="Design System|Button"
   component={Button}
-  parameters={{ component: Button }}
 />
 
-# Selected story
+# Two ways to display blocks - combined into a single table, or separated into two tables
 
-<Preview withToolbar={true}>
-  <Story id="." />
-</Preview>
+## 1. DependenciesTable - combined dependencies and dependents into one
+<DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' of={Button} />
 
-# Properties
-<Props of={Button} />
+## 2. Dependencies and Dependents tables
 
-# Dependencies doc block
 <Dependencies of={Button} />
 
-# Dependents doc block
 <Dependents of={Button} />
 ```
 

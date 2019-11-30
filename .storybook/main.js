@@ -1,3 +1,4 @@
+const path = require('path');
 const DependenciesPlugin = require('storybook-dep-webpack-plugin');
 
 module.exports = {
