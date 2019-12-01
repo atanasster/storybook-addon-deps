@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   presets: [
     {
-      name: require.resolve('../dist/preset'),
+      name: require.resolve('../dist/preset-explorer'),
       options: { 
         //by default @storybook modules are also excluded
         exclude: /^@babel/,

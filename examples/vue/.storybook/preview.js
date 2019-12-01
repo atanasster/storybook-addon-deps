@@ -1,6 +1,5 @@
-import { configure, addParameters, addDecorator } from '@storybook/vue';
+import { addParameters, addDecorator } from '@storybook/vue';
 import { DocsPage } from 'storybook-addon-deps/blocks';
-import { withDependenciesContext } from 'storybook-addon-deps';
 
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -20,5 +19,3 @@ addParameters({
     page: DocsPage,
   },
 });
-
-addDecorator(withDependenciesContext);

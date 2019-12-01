@@ -118,22 +118,12 @@ import { DependenciesTable, Dependencies, Dependents } from 'storybook-addon-dep
 
 ## C. Add a dependencies explorer tab to storybookjs (optional)
 
-## 1. Use the `preset-explorer` preset
+## Use the `preset-explorer` preset
 ```js
 module.exports = {
   presets: ['storybook-addon-deps/preset-explorer', ...]
 ...
 }  
-```
-
-## 2. Add decorator
-in the `preview.js` (was `config.js`) file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
-```js
-import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
-import { withDependenciesContext } from 'storybook-addon-deps';
-...
-addDecorator(withDependenciesContext);
-...
 ```
 
 # Project analysis
