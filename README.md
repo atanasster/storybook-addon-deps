@@ -1,21 +1,34 @@
 # storybook-addon-deps
 
 A storybook addon to add a dependencies tree exporer tab.<br />
-Works in conjunction with [storybook-dep-webpack-plugin](https://github.com/atanasster/storybook-dep-webpack-plugin/)
 
-![Dependencies plugin](./doc/storybook_dependencies.gif)
-
-## DocsPage demo 
-[grommet-controls](https://atanasster.github.io/grommet-controls/?path=/docs/controls-controls-avatar--main)
-
-## Install and configure `storybook-dep-webpack-plugin`
-[storybook-dep-webpack-plugin](https://github.com/atanasster/storybook-dep-webpack-plugin/blob/master/README.md)
-
-
-## Installation
+## Quick start
+### 1. Install
 ```sh
 npm i -D storybook-addon-deps
 ```
+### 2. Add preset: `.storybook/main.js`
+```js
+module.exports = {
+  presets: ['storybook-addon-deps/preset', ...]
+...
+}  
+```
+
+### 3. Configure DocsPage `.storybook/preview.js` (was `.storybook/config.js`)
+```
+import { DocsPage } from 'storybook-addon-deps/blocks';
+
+addParameters({
+  docs: { page: DocsPage },
+  dependencies: { withStoriesOnly: true, hideEmpty: true }
+});
+```
+
+# Advanced setup and usage
+
+## DocsPage demo 
+[grommet-controls](https://atanasster.github.io/grommet-controls/?path=/docs/controls-controls-avatar--main)
 
 ## Usage
 In your storybook preview.js(or config.js), define some global parameters to exchange the data collected by the `storybook-dep-webpack-plugin`
@@ -103,29 +116,18 @@ import { DependenciesTable, Dependencies, Dependents } from 'storybook-addon-dep
 <Dependents of={Button} />
 ```
 
-## C. Add a dependencies tab to storybookjs (optional)
+## C. Add a dependencies explorer tab to storybookjs (optional)
 
-## 1. Register addon
-* Register `storybook-addon-deps` in your `main.js` config:
-
+## 1. Use the `preset-explorer` preset
 ```js
+module.exports = {
+  presets: ['storybook-addon-deps/preset-explorer', ...]
 ...
-  addons: [
-    ...
-    'storybook-addon-deps/register',
-    ...
-  ],
-
-```
-
-* Or in the `addons.js` file in your storybook config, register `storybook-addon-deps`:
-
-```js
-import 'storybook-addon-deps/register';
+}  
 ```
 
 ## 2. Add decorator
-in the `preview.js`/`config.js` file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
+in the `preview.js` (was `config.js`) file, add the dependeny context provider (in order to exchange data with the dependencies tab panel)
 ```js
 import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
 import { withDependenciesContext } from 'storybook-addon-deps';

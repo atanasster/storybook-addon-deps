@@ -1,4 +1,4 @@
-import { configure, addParameters, addDecorator } from '@storybook/angular';
+import { addParameters, addDecorator } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import { DocsPage } from 'storybook-addon-deps/blocks';
 import { withDependenciesContext } from 'storybook-addon-deps';

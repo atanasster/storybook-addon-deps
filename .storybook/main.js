@@ -1,13 +1,20 @@
 const path = require('path');
-const DependenciesPlugin = require('storybook-dep-webpack-plugin');
 
 module.exports = {
-  presets: ['@storybook/addon-docs/preset'],
+  presets: [
+    {
+      name: require.resolve('../dist/preset'),
+      options: { 
+        //by default @storybook modules are also excluded
+        exclude: /^@babel/,
+      }
+    },
+    '@storybook/addon-docs/preset',
+  ],
   stories: [
     './stories/**/*.stories.(js|tsx|mdx)',
   ],
   addons: [
-    './dist/register',
     'storybook-dark-mode/register',
   ],
   webpack: async (config, { configType }) => ({
@@ -34,12 +41,5 @@ module.exports = {
         "@storybook/theming": path.resolve(path.resolve(__dirname, '..'), "node_modules", "@storybook", "theming"),
       }}
     },
-    plugins: [
-      ...config.plugins,
-      new DependenciesPlugin({
-        //by default @storybook modules are also excluded
-        exclude: /^@babel/
-      })
-    ]
   }),
 };

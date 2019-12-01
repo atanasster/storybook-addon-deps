@@ -1,4 +1,4 @@
-import { configure, addParameters, addDecorator } from '@storybook/react';
+import { addParameters, addDecorator } from '@storybook/react';
 import { DocsPage } from '../dist/blocks/DocsPage';
 import { withDependenciesContext } from '../dist/index';
 
