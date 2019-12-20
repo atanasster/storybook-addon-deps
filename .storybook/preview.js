@@ -1,4 +1,4 @@
-import { addParameters, addDecorator } from '@storybook/react';
+import { addParameters } from '@storybook/react';
 import { DocsPage } from '../dist/blocks/DocsPage';
 
 addParameters({
