@@ -198,7 +198,7 @@ module.exports = {
       }
     }
   ]
-...
+```
 
 **exclude** - a RegExp for the modules to exclude.<br/>
 example: 
