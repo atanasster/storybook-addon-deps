@@ -180,3 +180,83 @@ import { ChartStoriesPerComponent } from 'storybook-addon-deps/blocks';
 
 ## vue
 ![vue](./doc/vue.gif)
+
+
+# Options
+a set of options can be passed down to the `storybook-dep-webpack-plugin`
+
+**filter** - a RegExp or function to select the stories.<br/>
+example: 
+```
+module.exports = {
+  presets: [
+    { 
+      name: 'storybook-addon-deps/preset-explorer', 
+      options: {
+        filter: (resource) => {
+        return /\.(stories|story)\.[tj]sx?$/.test(resource) && resource.indexOf("Avatar") > -1;
+      }
+    }
+  ]
+...
+
+**exclude** - a RegExp for the modules to exclude.<br/>
+example: 
+```
+module.exports = {
+  presets: [
+    { 
+      name: 'storybook-addon-deps/preset-explorer', 
+      options: {
+        //by default @storybook modules are also excluded
+        exclude: /^@babel/,
+      }
+    }
+  ]
+
+```
+
+**maxLevels** - How many levels deep to follow the dependencies.<br/>
+example: 
+```
+module.exports = {
+  presets: [
+    { 
+      name: 'storybook-addon-deps/preset-explorer', 
+      options: {
+        maxLevels: 10,
+      }
+    }
+  ]
+
+```
+
+**pickProperties** - An array of the props to pick from the module webpack data.<br/>
+example: 
+```
+module.exports = {
+  presets: [
+    { 
+      name: 'storybook-addon-deps/preset-explorer', 
+      options: {
+        pickProperties: ['id', 'name', 'request'],
+      }
+    }
+  ]
+
+```
+
+**pickModuleProperties** - An array of the props to pick from the module.module webpack data.<br/>
+example: 
+```
+module.exports = {
+  presets: [
+    { 
+      name: 'storybook-addon-deps/preset-explorer', 
+      options: {
+        pickModuleProperties: [],
+      }
+    }
+  ]
+
+```
