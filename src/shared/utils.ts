@@ -138,13 +138,14 @@ export const getDependenciesProps = (
   if (error) {
     return {
       error,
+      hideEmpty: dependenciesParam.hideEmpty,
     }
   }
   
   const noDepError = `No ${dependents ? 'dependents' : 'dependencies'} found for this component`;
   const module: IDependency = findComponentDependencies(map, component);
   if (!module) {
-    return { error: noDepError}
+    return { error: noDepError, hideEmpty: dependenciesParam.hideEmpty,}
   }
   const { mapper } = map;
   let modules: IModuleWithStory[];
