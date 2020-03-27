@@ -9,13 +9,13 @@ module.exports = {
         exclude: /^@babel/,
       }
     },
-    '@storybook/addon-docs/preset',
+    
+  ],
+  addons: [
+    '@storybook/addon-docs',
   ],
   stories: [
     './stories/**/*.stories.(js|tsx|mdx)',
-  ],
-  addons: [
-    'storybook-dark-mode/register',
   ],
   webpack: async (config, { configType }) => ({
     ...config,
