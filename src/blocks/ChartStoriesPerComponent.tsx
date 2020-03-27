@@ -4,7 +4,7 @@ import { SELECT_STORY } from '@storybook/core-events';
 import { DocsContext } from '@storybook/addon-docs/blocks';
 import { StoryStore } from '@storybook/client-api';
 import { Chart } from 'react-google-charts';
-import { getComponentName } from '../shared/utils';
+import { getComponentName, getStoreStories } from '../shared/utils';
 
 export interface IChartStoriesPerComponentProps {
   options?: object,
@@ -12,8 +12,9 @@ export interface IChartStoriesPerComponentProps {
 }
 
 const storiesByComponent = (storyStore: StoryStore) => {
-  return Object.keys(storyStore._data).reduce((acc, key) => {
-    const story = storyStore._data[key];
+  const store = getStoreStories(storyStore);
+  return Object.keys(store).reduce((acc, key) => {
+    const story = store[key];
     const componentName = getComponentName(story.parameters.component) || 'N/A';
     if (acc[componentName]) {
       return {...acc, [componentName]: [...acc[componentName], story] };

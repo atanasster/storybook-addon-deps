@@ -84,7 +84,7 @@ export const mapModuleToStory = (modules: IDependency[], storyStore: StoryStore,
   if (modules) {
     
     const result = modules.map(module => {
-      const store = storyStore._data || storyStore;
+      const store = getStoreStories(storyStore);
       const storyName = module.name && store
       && Object.keys(store).find(storyname => {
         const parameters = store[storyname].parameters;
@@ -103,7 +103,7 @@ export const mapModuleToStory = (modules: IDependency[], storyStore: StoryStore,
 }
 
 export const getComponentStories = (component: string, storyStore: StoryStore) => {
-  const store = storyStore._data || storyStore;
+  const store = getStoreStories(storyStore);
   return store && Object.keys(store).filter(storyname => {
       const parameters = store[storyname].parameters;
       const componentName = getComponentName(parameters && parameters.component);
@@ -171,3 +171,6 @@ export const getDependenciesProps = (
     error: modules.length > 0 ? undefined : noDepError,
    };
 };
+
+//@ts-ignore
+export const getStoreStories = (store: StoryStore) => store._stories || store._data;

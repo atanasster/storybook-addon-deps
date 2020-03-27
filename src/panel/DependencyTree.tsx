@@ -1,10 +1,10 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
+import { Story } from '@storybook/api';
 import { DocsPageWrapper, Title, Subtitle, Description } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import SortableTree from 'react-sortable-tree';
 import '../tree-styles.css';
-import { StoryInput } from '../types';
 import { getDependenciesProps, IModuleWithStory, mapModuleToStory, getComponentName } from '../shared/utils';
 import { dependencyError, errors } from '../shared/getDependencyError';
 import { ModuleName, nameAsString } from '../shared/ModuleName';
@@ -18,7 +18,7 @@ export const LabelSmallLight = styled(StyledLight)<{}>(() => ({
 }));
 
 interface DependencyTreeProps {
-  story?: StoryInput,
+  story?: Story,
   storyStore?: any,
   map?: IDependenciesMap,
 }

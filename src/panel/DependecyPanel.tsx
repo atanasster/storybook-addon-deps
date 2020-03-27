@@ -1,17 +1,16 @@
 import React from 'react';
-import { Consumer, Combo, API } from '@storybook/api';
+import { Consumer, Combo, API, Story } from '@storybook/api';
 import { AddonPanel } from '@storybook/components';
 import { IDependenciesMap } from 'storybook-dep-webpack-plugin/runtime/types';
 import { EVENTS } from '../constants';
 import { useAddonState, useChannel } from '@storybook/api';
 import { ADDON_ID } from '../constants';  
-import { StoryInput } from '../types';
 import { DependencyTree } from './DependencyTree';
 
-const mapper = ({ state }: Combo): { story?: StoryInput, map?: IDependenciesMap, storyStore?: any } => {
-  const story = state.storiesHash[state.storyId] as StoryInput;
+const mapper = ({ state }: Combo): { story?: Story, map?: IDependenciesMap, storyStore?: any } => {
+  const story = state.storiesHash[state.storyId] as Story;
   return {
-    story,
+    story ,
     storyStore: state.storiesHash,
   };
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { DocsContext } from '@storybook/addon-docs/blocks';
 import { IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
 import { ModuleName } from '../shared/ModuleName';
-import { getComponentName } from '../shared/utils';
+import { getComponentName, getStoreStories } from '../shared/utils';
 import { StyledLight, StyledSmallLight } from '../shared/Labels';
 
 interface ModuleRowProps {
@@ -14,13 +14,14 @@ export const ModuleRow: React.FunctionComponent<ModuleRowProps> = ({ module }) =
   <DocsContext.Consumer>
     {context => {
       const { name, id, request, contextPath } = module;
-      const storyName = name && context && context.storyStore && context.storyStore._data
-       && Object.keys(context.storyStore._data).find(storyname => {
-         const parameters = context.storyStore._data[storyname].parameters;
+      const store = context ? getStoreStories(context.storyStore) : undefined;
+      const storyName = name && store
+       && Object.keys(store).find(storyname => {
+         const parameters = store[storyname].parameters;
          const componentName = getComponentName(parameters && parameters.component);
          return componentName && componentName === name;
         });
-      const story = storyName ? context.storyStore._data[storyName] : undefined;
+      const story = storyName ? store[storyName] : undefined;
       return (
         <tr>
           <td>

@@ -4,7 +4,7 @@ import { SELECT_STORY } from '@storybook/core-events';
 import { DocsContext } from '@storybook/addon-docs/blocks';
 import { Chart } from 'react-google-charts';
 import { getDependencyMap } from 'storybook-dep-webpack-plugin/runtime/main';
-import { getComponentStories } from '../shared/utils';
+import { getComponentStories, getStoreStories } from '../shared/utils';
 
 export interface IChartChartComponentUsageProps {
   options?: object,
@@ -69,7 +69,7 @@ export const ChartComponentUsage: React.FunctionComponent<IChartChartComponentUs
                   const component = Object.keys(usage)[dataTable.getValue(selection[0].row, 3) as number];
                   const stories = getComponentStories(component, context.storyStore);
                   if (stories && stories.length > 0) {
-                    addons.getChannel().emit(SELECT_STORY, context.storyStore._data[stories[0]])
+                    addons.getChannel().emit(SELECT_STORY, getStoreStories(context.storyStore)[stories[0]])
                   }
                }
               },
