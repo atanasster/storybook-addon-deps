@@ -1,9 +1,9 @@
 import React from 'react';
 import addons from '@storybook/addons';
 import { SELECT_STORY } from '@storybook/core-events';
-import { DocsContext } from '@storybook/addon-docs/blocks';
 import { StoryStore } from '@storybook/client-api';
 import { Chart } from 'react-google-charts';
+import { DocsContext } from '../shared/DocsBlocks';
 import { getComponentName, getStoreStories } from '../shared/utils';
 
 export interface IChartStoriesPerComponentProps {

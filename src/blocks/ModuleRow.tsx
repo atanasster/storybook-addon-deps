@@ -1,6 +1,7 @@
 import React from 'react';
-import { DocsContext } from '@storybook/addon-docs/blocks';
+
 import { IDependency } from 'storybook-dep-webpack-plugin/runtime/types';
+import { DocsContext } from '../shared/DocsBlocks';
 import { ModuleName } from '../shared/ModuleName';
 import { getComponentName, getStoreStories } from '../shared/utils';
 import { StyledLight, StyledSmallLight } from '../shared/Labels';

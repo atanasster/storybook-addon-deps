@@ -1,5 +1,5 @@
 import React from 'react';
-import { DocsContext } from '@storybook/addon-docs/blocks';
+import { DocsContext } from '../shared/DocsBlocks';
 import { getDependenciesProps, IDependenciesProps } from '../shared/utils';
 import { TableWrapper } from './TableWrapper';
 import { ModulesTable } from './ModulesTable';

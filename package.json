@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-deps",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A storybook addon to display component dependencies",
   "keywords": [
     "addon",
@@ -38,16 +38,16 @@
     "react-dom": ">= 16.8.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "next",
-    "@storybook/addon-docs": "next",
-    "@storybook/addons": "next",
-    "@storybook/api": "next",
-    "@storybook/client-api": "next",
-    "@storybook/components": "next",
+    "@storybook/addon-actions": "^6.0.0-beta.0",
+    "@storybook/addon-docs": "^6.0.0-beta.0",
+    "@storybook/addons": "^6.0.0-beta.0",
+    "@storybook/api": "^6.0.0-beta.0",
+    "@storybook/client-api": "^6.0.0-beta.0",
+    "@storybook/components": "^6.0.0-beta.0",
     "@storybook/design-system": "^2.0.5",
-    "@storybook/react": "next",
-    "@storybook/router": "next",
-    "@storybook/theming": "next",
+    "@storybook/react": "^6.0.0-beta.0",
+    "@storybook/router": "^6.0.0-beta.0",
+    "@storybook/theming": "^6.0.0-beta.0",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",

@@ -1,24 +1,17 @@
-import React, { FunctionComponent } from 'react';
-import { Title, Subtitle, Primary, Stories, Props, Description, DocsPageProps } from '@storybook/addon-docs/blocks';
+import React, { FC } from 'react';
+import { Title, Subtitle, Primary, Stories, Props, Description } from '../shared/DocsBlocks';
 import { DependenciesTable } from './DependenciesTable';
 
-export const DocsPage: FunctionComponent<DocsPageProps> = ({
-  titleSlot,
-  subtitleSlot,
-  descriptionSlot,
-  primarySlot,
-  propsSlot,
-  storiesSlot,
-}) => {
+export const DocsPage: FC = () => {
   return (
     <>
-      <Title slot={titleSlot} />
-      <Subtitle slot={subtitleSlot} />
-      <Description slot={descriptionSlot} />
-      <Primary slot={primarySlot} />
-      <Props slot={propsSlot} />
+      <Title />
+      <Subtitle />
+      <Description />
+      <Primary />
+      <Props />
       <DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' />
-      <Stories slot={storiesSlot} />
+      <Stories />
     </>
   );
 };
