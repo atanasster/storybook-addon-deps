@@ -194,7 +194,8 @@ module.exports = {
       name: 'storybook-addon-deps/preset-explorer', 
       options: {
         filter: (resource) => {
-        return /\.(stories|story)\.[tj]sx?$/.test(resource) && resource.indexOf("Avatar") > -1;
+          return /\.(stories|story)\.[tj]sx?$/.test(resource) && resource.indexOf("Avatar") > -1;
+        }
       }
     }
   ]
