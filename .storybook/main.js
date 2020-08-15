@@ -15,7 +15,7 @@ module.exports = {
     '@storybook/addon-docs',
   ],
   stories: [
-    './stories/**/*.stories.(js|tsx|mdx)',
+    './stories/**/*.stories.@(js|tsx|mdx)',
   ],
   webpack: async (config, { configType }) => ({
     ...config,

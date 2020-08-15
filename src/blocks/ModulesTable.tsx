@@ -1,6 +1,6 @@
 import React from 'react';
 import { Description } from '@storybook/components';
-import { SectionRow }  from '@storybook/components/dist/blocks/PropsTable/SectionRow';
+import { SectionRow }  from '@storybook/components/dist/blocks/ArgsTable/SectionRow';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
 import { withReset } from '@storybook/components/dist/typography/shared';
@@ -38,7 +38,7 @@ export const ModulesTable: React.FunctionComponent<IModulesTableProps> = props =
   }
   return (
     <>
-      {title && <SectionRow section={title} />}
+      {title && <SectionRow label={title} colSpan={2} level="section"/>}
       {err && <ErrorRow><td colSpan={2}>{err}</td></ErrorRow>}
       {!err && modules.map(module => <ModuleRow key={module.request} module={module} />)}
     </>  

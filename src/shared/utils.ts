@@ -87,8 +87,10 @@ export const mapModuleToStory = (modules: IDependency[], storyStore: StoryStore,
       const store = getStoreStories(storyStore);
       const storyName = module.name && store
       && Object.keys(store).find(storyname => {
-        const parameters = store[storyname].parameters;
-        const componentName = getComponentName(parameters && parameters.component);
+        const { parameters = {}, component, kind } = store[storyname];
+        const document = storyStore._kinds[kind];
+        const { parameters: kindParameters = {} } = document || {};
+        const componentName = getComponentName(component || parameters.component || kindParameters.component);
         return componentName && componentName === module.name;
       });
       const story = storyName ? store[storyName] : undefined;
