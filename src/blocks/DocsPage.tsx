@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Title, Subtitle, Primary, Stories, Props, Description } from '../shared/DocsBlocks';
+import { Title, Subtitle, Primary, Stories, ArgsTable, Description } from '../shared/DocsBlocks';
 import { DependenciesTable } from './DependenciesTable';
 
 export const DocsPage: FC = () => {
@@ -9,7 +9,7 @@ export const DocsPage: FC = () => {
       <Subtitle />
       <Description />
       <Primary />
-      <Props />
+      <ArgsTable />
       <DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' />
       <Stories />
     </>

@@ -126,12 +126,12 @@ export interface IModulesTableProps {
 
 
 export const getDependenciesProps = (
-  { excludeFn, of, dependents }: IDependenciesTableProps,
+  { excludeFn, of = CURRENT_SELECTION, dependents }: IDependenciesTableProps,
   { parameters = {}, storyStore }: DocsContextProps,
   defaultMap?: IDependenciesMap,
 ): IModulesTableProps => {
   const { component, dependencies: dependenciesParam = {}} = parameters;
-  const target = of === undefined || of === CURRENT_SELECTION ? component : of;
+  let target = of === CURRENT_SELECTION ? component : of;
   const map = defaultMap || getDependencyMap();
   const error = dependencyError({
     map,
@@ -145,16 +145,27 @@ export const getDependenciesProps = (
   }
   
   const noDepError = `No ${dependents ? 'dependents' : 'dependencies'} found for this component`;
-  const module: IDependency = findComponentDependencies(map, component);
+  const module: IDependency = findComponentDependencies(map, target);
   if (!module) {
     return { error: noDepError, hideEmpty: dependenciesParam.hideEmpty,}
   }
   const { mapper } = map;
   let modules: IModuleWithStory[];
   if (dependents ) {
-    modules = Object.keys(mapper)
+    const mapKeys = Object.keys(mapper);
+    modules = mapKeys
       .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.includes(module['key']))
       .map(key => mapper[key]);
+    if (target && typeof target.components === 'object') {
+      Object.keys(target.components).forEach(name => {
+        if (!modules.find(m => m.name === name)) {
+          const module = mapKeys.find(key => mapper[key].name === name);
+          if (module) {
+            modules.push(mapper[module]);
+          }
+        }  
+      })
+    }
   } else {
     if (module.dependencies) {
       modules = module.dependencies.map(key => mapper[key]);

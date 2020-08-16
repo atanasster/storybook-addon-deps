@@ -1,7 +1,7 @@
 import {
   Story,
-  Preview,
-  Props,
+  Canvas,
+  ArgsTable,
   Description,
   Meta,
 } from '@storybook/addon-docs/blocks';
@@ -19,12 +19,12 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
 
 # Selected story
 
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story id="." />
-</Preview>
+</Canvas>
 
 # Properties
-<Props of={Button} />
+<ArgsTable of={Button} />
 
 # Table dependents + dependencies
 <DependenciesTable titleDependencies='Dependencies' titleDependents='Dependents' of={Button} />
@@ -36,7 +36,7 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
 <Dependents of={Button} />
 
 # Stories
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story name="buttons">
     <Button appearance="primary">Primary</Button>
     <Button appearance="secondary">Secondary</Button>
@@ -45,18 +45,18 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
     <Button appearance="primaryOutline">Outline primary</Button>
     <Button appearance="secondaryOutline">Outline secondary</Button>
   </Story>
-</Preview>
+</Canvas>
 
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story name="sizes">
     <Button appearance="primary">Default</Button>
     <Button appearance="primary" size="small">
       Small
     </Button>
   </Story>
-</Preview>
+</Canvas>
 
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story name="loading">
     <Button appearance="primary" isLoading>
       Primary
@@ -74,9 +74,9 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
       Outline
     </Button>
   </Story>
-</Preview>
+</Canvas>
 
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story name="disabled">
     <Button appearance="primary" isDisabled>
       Primary
@@ -91,9 +91,9 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
       Outline
     </Button>
   </Story>
-</Preview>  
+</Canvas>  
 
-<Preview withToolbar={true}>
+<Canvas withToolbar={true}>
   <Story name="contains icon">
     <Button appearance="outline" containsIcon>
       <Icon icon="link" aria-label="Link" />
@@ -102,4 +102,4 @@ import { DependenciesTable, Dependencies, Dependents } from '../../dist/blocks';
       <Icon icon="link" aria-label="Link" />
     </Button>
   </Story>
-</Preview>  
+</Canvas>  

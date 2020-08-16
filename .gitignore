@@ -10,3 +10,4 @@ documentation.json
 yarn.lock
 .rpt2_cache
 .DS_Store
+test-sb-deps/**

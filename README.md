@@ -35,7 +35,7 @@ In your storybook preview.js(or config.js), define some global parameters to exc
 
 
 ```js
-import { configure, addDecorator, addParameters } from '@storybook/{yourframework}';
+import { addParameters } from '@storybook/{yourframework}';
 
 addParameters({
  dependencies: {
@@ -91,8 +91,8 @@ basic.story = {
 ```jsx
 import {
   Story,
-  Preview,
-  Props,
+  Canvas,
+  ArgsTable,
   Description,
   Meta,
 } from '@storybook/addon-docs/blocks';
@@ -115,6 +115,17 @@ import { DependenciesTable, Dependencies, Dependents } from 'storybook-addon-dep
 
 <Dependents of={Button} />
 ```
+
+**excludeFn**
+
+You can exclude specific modules from the dependencies tables by setting 
+
+`excludeFn: (module: IDependency) => boolean;;`
+
+```
+  <Dependencies of={Button} excludeFn={module => module.name === 'babel'} />
+```
+
 
 ## C. Add a dependencies explorer tab to storybookjs (optional)
 

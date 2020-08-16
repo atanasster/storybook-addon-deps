@@ -2,7 +2,6 @@
 
 import {
   addParameters,
-  addDecorator,
   setCustomElements,
 } from '@storybook/web-components';
 import { DocsPage } from 'storybook-addon-deps/blocks';
