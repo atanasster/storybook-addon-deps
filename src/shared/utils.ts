@@ -150,13 +150,17 @@ export const getDependenciesProps = (
     return { error: noDepError, hideEmpty: dependenciesParam.hideEmpty,}
   }
   const { mapper } = map;
-  let modules: IModuleWithStory[];
+  let modules: IModuleWithStory[] = [];
   if (dependents ) {
-    const mapKeys = Object.keys(mapper);
-    modules = mapKeys
+    modules = Object.keys(mapper)
       .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.includes(module['key']))
       .map(key => mapper[key]);
+  } else {
+    if (module.dependencies) {
+      modules = module.dependencies.map(key => mapper[key]);
+    }
     if (target && typeof target.components === 'object') {
+      const mapKeys = Object.keys(mapper);
       Object.keys(target.components).forEach(name => {
         if (!modules.find(m => m.name === name)) {
           const module = mapKeys.find(key => mapper[key].name === name);
@@ -165,10 +169,6 @@ export const getDependenciesProps = (
           }
         }  
       })
-    }
-  } else {
-    if (module.dependencies) {
-      modules = module.dependencies.map(key => mapper[key]);
     }
   }
 
