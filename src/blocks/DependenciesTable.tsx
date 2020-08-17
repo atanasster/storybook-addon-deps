@@ -16,7 +16,6 @@ export const DependenciesTable: React.FunctionComponent<IDependenciesProps & ITi
       const isEmpty = (prop: IModulesTableProps) => (prop.error || (!prop.modules || prop.modules.length === 0));
       const dependenciesProps = getDependenciesProps(props, context);
       const dependentsProps = getDependenciesProps({...props, dependents: true }, context);
-      console.log(isEmpty, dependenciesProps, dependentsProps)
       const { hideEmpty } = dependenciesProps;
       if (hideEmpty && isEmpty(dependenciesProps) && isEmpty(dependentsProps)) {
         return null;

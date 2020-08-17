@@ -151,16 +151,38 @@ export const getDependenciesProps = (
   }
   const { mapper } = map;
   let modules: IModuleWithStory[] = [];
+  const mapKeys = Object.keys(mapper);  
   if (dependents ) {
-    modules = Object.keys(mapper)
+    modules = mapKeys
       .filter(key => mapper[key].id && mapper[key].dependencies && mapper[key].dependencies.includes(module['key']))
       .map(key => mapper[key]);
+    if (target) {
+      const targetName = getComponentName(target);
+      Object.keys(storyStore._stories).forEach(key => {
+        const story = storyStore._stories[key];
+        const kind = storyStore._kinds[story.kind];
+        const component = story.parameters?.component || story.component || kind.parameters?.component || kind.component;
+        if (component && typeof component.components === 'object') {
+          Object.keys(component.components).forEach(name => {
+            if (name === targetName) {
+              const componentName = getComponentName(component);
+              if (!modules.find(m => m.name === componentName)) {
+                const module = mapKeys.find(key => mapper[key].name === componentName);
+                if (module) {
+                  modules.push(mapper[module]);
+                }
+              }  
+            }
+          });
+          
+        }
+      })
+    }  
   } else {
     if (module.dependencies) {
       modules = module.dependencies.map(key => mapper[key]);
     }
     if (target && typeof target.components === 'object') {
-      const mapKeys = Object.keys(mapper);
       Object.keys(target.components).forEach(name => {
         if (!modules.find(m => m.name === name)) {
           const module = mapKeys.find(key => mapper[key].name === name);
