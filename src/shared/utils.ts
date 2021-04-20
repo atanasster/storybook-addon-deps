@@ -41,14 +41,16 @@ export const getComponentName = (component?: ComponentType | string): string | u
   return component.name;
 }  
 
-export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component) => {
+export const findComponentDependencies: ComponentDependenciesFunction = memoize(20)((map, component, parameters) => {
+  const storyFilename = parameters.fileName;
+  const match = parameters.dependencies.match ?? ((m) => m?.[0][0])
   const { mapper } = map;
   if (mapper && component) {
     const componentName = getComponentName(component);
     // console.log('componentName', component, Object.keys(mapper).filter(key => mapper[key].id).map(key => mapper[key]));
     if (componentName) {
       
-      const key = Object.keys(mapper).find(key => mapper[key].id === componentName || mapper[key].name === componentName);
+      const key = match(Object.entries(mapper).filter(([key]) => mapper[key].id === componentName || mapper[key].name === componentName), storyFilename);
       if (key) {
         let module = mapper[key];
         module.key = key;
@@ -145,7 +147,7 @@ export const getDependenciesProps = (
   }
   
   const noDepError = `No ${dependents ? 'dependents' : 'dependencies'} found for this component`;
-  const module: IDependency = findComponentDependencies(map, target);
+  const module: IDependency = findComponentDependencies(map, target, parameters);
   if (!module) {
     return { error: noDepError, hideEmpty: dependenciesParam.hideEmpty,}
   }

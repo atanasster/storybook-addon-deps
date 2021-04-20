@@ -46,6 +46,10 @@ addParameters({
     //completely hide a dependency/dependents block if it has no elements
     //by default this is false
     hideEmpty: true,
+
+    //custom match function to find matching component in case duplicate 
+    //component names. chooses first match if not configured
+    match: (matchingComponents, storyFilename) => matchingComponents?.[0][0]
   }
 });
 ```
