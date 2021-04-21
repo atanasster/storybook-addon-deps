@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
 import { TableWrapper as Table } from '@storybook/components';
-import { ResetWrapper } from '@storybook/components/dist/typography/DocumentFormatting';
+import { ResetWrapper } from '@storybook/components/dist/esm/typography/DocumentFormatting';
 
 export const DepTable = styled(Table)<{}>(() => ({
   '&&': {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Description } from '@storybook/components';
-import { SectionRow }  from '@storybook/components/dist/blocks/ArgsTable/SectionRow';
+import { SectionRow }  from '@storybook/components/dist/esm/blocks/ArgsTable/SectionRow';
 import { styled } from '@storybook/theming';
 import { transparentize } from 'polished';
-import { withReset } from '@storybook/components/dist/typography/shared';
+import { withReset } from '@storybook/components/dist/esm/typography/shared';
 
 import { ModuleRow } from './ModuleRow';
 import { IModulesTableProps } from '../shared/utils';
